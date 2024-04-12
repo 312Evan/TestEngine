@@ -13,9 +13,9 @@ public class LightingManager {
         this.app = app;
     }
 
-    public void addSun() {
+    public void addSun(ColorRGBA sunColor) {
         DirectionalLight sun = new DirectionalLight();
-        sun.setColor(ColorRGBA.White);
+        sun.setColor(sunColor);
         sun.setDirection(new Vector3f(-.5f, -.5f, -.5f).normalizeLocal());
         app.getRootNode().addLight(sun);
 
