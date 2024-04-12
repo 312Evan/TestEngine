@@ -8,10 +8,19 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import com.jme3.util.SkyFactory;
+import com.jme3.util.SkyFactory.EnvMapType;
+
 import enginetest.EngineFunctions.*;
 
 public class EngineTest extends SimpleApplication {
-    public CubeSpawner cubeSpawner;
+    public CubeSpawner cubeSpawner = new CubeSpawner(this);
+    public Skybox skybox = new Skybox(this);
+    public LightingManager lightingManager = new LightingManager(this);
+
+    ColorRGBA ambientColor = new ColorRGBA(0.2f, 0.2f, 0.2f, 1.0f);
+    ColorRGBA diffuseColor = new ColorRGBA(0.5f, 0.5f, 0.5f, 1.0f);
+    ColorRGBA specularColor = new ColorRGBA(1.0f, 1.0f, 1.0f, 1.0f);
 
     public static void main(String[] args) {
         EngineTest app = new EngineTest();
@@ -21,9 +30,11 @@ public class EngineTest extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        cubeSpawner = new CubeSpawner(this);
-        cubeSpawner.CreateCube(1, 1, 1, 4, 5, 0, ColorRGBA.Blue);
-        cubeSpawner.CreateCube(3, 2, 5, 0, 0, 0, ColorRGBA.Red);
+        cubeSpawner.CreateUnshadedCube(1, 1, 1, 4, 5, 0, ColorRGBA.Blue);
+        cubeSpawner.CreateShadedSolidCube(3, 2, 5, 0, 0, 0, ambientColor, diffuseColor, specularColor);
+        skybox.SetDefaultSkybox();
+
+        lightingManager.addSun();
     }
 
     @Override

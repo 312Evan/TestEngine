@@ -17,19 +17,30 @@ public class CubeSpawner {
         this.app = app;
     }
 
-    public void CreateCube(float length, float height, float width, float posX, float posY, float posZ, ColorRGBA color) {
-        try {
-            Box b = new Box(length, height, width);
-            Geometry geom = new Geometry("Box", b);
-            geom.setLocalTranslation(new Vector3f(posX, posY, posZ));
+    public void CreateUnshadedCube(float length, float height, float width, float posX, float posY, float posZ, ColorRGBA color) {
+        Box b = new Box(length, height, width);
+        Geometry geom = new Geometry("Box", b);
+        geom.setLocalTranslation(new Vector3f(posX, posY, posZ));
 
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-            mat.setColor("Color", color);
-            geom.setMaterial(mat);
+        Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", color);
+        geom.setMaterial(mat);
 
-            app.getRootNode().attachChild(geom);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        app.getRootNode().attachChild(geom);
+    }
+
+    public void CreateShadedSolidCube(float length, float height, float width, float posX, float posY, float posZ, ColorRGBA ambientColor, ColorRGBA diffuseColor, ColorRGBA specularColor) {
+        Box b = new Box(length, height, width);
+        Geometry geom = new Geometry("Box", b);
+        geom.setLocalTranslation(new Vector3f(posX, posY, posZ));
+
+        Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+        mat.setColor("Ambient", ambientColor);
+        mat.setColor("Diffuse", diffuseColor);
+        mat.setColor("Specular", specularColor);
+        mat.setFloat("Shininess", 16.0f);
+        geom.setMaterial(mat);
+
+        app.getRootNode().attachChild(geom);
     }
 }
