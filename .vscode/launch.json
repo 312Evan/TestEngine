@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CharacterControllers",
+            "request": "launch",
+            "mainClass": "enginetest.EngineFunctions.CharacterControllers.CharacterControllers",
+            "projectName": "EngineTest"
+        },
+        {
+            "type": "java",
             "name": "Launch EngineTest",
             "request": "launch",
             "mainClass": "enginetest.EngineTest",

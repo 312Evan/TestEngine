@@ -3,6 +3,7 @@ package enginetest.EngineFunctions;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
@@ -46,18 +47,19 @@ public class CubeManager {
         app.getRootNode().attachChild(geom);
     }
 
-    public void CreateTexturedCube(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, int objectId) {
+    public void CreateTexturedCube(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int objectId) {
         Box b = new Box(size.x, size.y, size.z);
         Geometry geom = new Geometry("Box", b);
+        b.scaleTextureCoordinates(new Vector2f(tileX, tileY));
         geom.rotate(rotation.x, rotation.y, rotation.z);
         geom.setLocalTranslation(position);
         geom.setUserData("objectId", objectId);
-
+        
         Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
         Texture texture = app.getAssetManager().loadTexture(texturePath);
+        texture.setWrap(Texture.WrapMode.Repeat);
         mat.setTexture("DiffuseMap", texture);
         geom.setMaterial(mat);
-
         app.getRootNode().attachChild(geom);
     }
 

@@ -1,7 +1,6 @@
 package enginetest.EngineFunctions;
 
 import com.jme3.app.SimpleApplication;
-
 import com.jme3.util.SkyFactory;
 import com.jme3.util.SkyFactory.EnvMapType;
 
