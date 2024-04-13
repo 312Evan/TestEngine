@@ -2,6 +2,7 @@ package enginetest.EngineFunctions;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
+import com.jme3.material.TechniqueDef.ShadowMode;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import com.jme3.texture.Texture;
@@ -23,8 +24,8 @@ public class ModelManager {
         Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
         Texture texture = app.getAssetManager().loadTexture(texturePath);
         mat.setTexture("DiffuseMap", texture);
+        mat.setReceivesShadows(true);
         model.setMaterial(mat);
-
         app.getRootNode().attachChild(model);
     }
 
