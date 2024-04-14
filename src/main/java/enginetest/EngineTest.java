@@ -35,16 +35,21 @@ public class EngineTest extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        flyCam.setMoveSpeed(100);
+
         //code testing
         cubeSpawner.CreateTexturedCube(new Vector3f(100, 0.1f, 100), new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), "Textures/Grass.jpg", 40, 40, 1);
         cubeSpawner.CreateTexturedCube(new Vector3f(35, 0.01f, 200), new Vector3f(0, 0.1f, 0), new Vector3f(0, 0, 0), "Textures/asphalt.jpg", 40, 7, 1);
-        modelManager.createModel("Models/oldcar.fbx", "Textures/oldcar.png", new Vector3f(-3, 0, 1), new Vector3f(0.01f, 0.01f, 0.01f), new Vector3f(300, 186, 0), 1);
+        
+        modelManager.createModel("Models/oldcar.fbx", "Textures/oldcar.png", new Vector3f(-3, 0, 1), new Vector3f(0.01f, 0.01f, 0.01f), new Vector3f(300, 186, 0), 5);
+        modelManager.applyNormalMap("Textures/oldcarNormal.png", 5);
+        
         modelManager.createModel("Models/building.fbx", "Textures/buildingTexture.png", new Vector3f(50, -0.1f, 0), new Vector3f(0.01f, 0.01f, 0.01f), new Vector3f(300, 0, 0), 1);
         modelManager.createModel("Models/oldcar2.fbx", "Textures/oldcar2.png", new Vector3f(3.5f, 0, 0), new Vector3f(0.025f, 0.025f, 0.025f), new Vector3f(300, 300, 0), 1);
         modelManager.createModel("Models/building.fbx", "Textures/buildingTexture.png", new Vector3f(30, -0.1f, 70), new Vector3f(0.01f, 0.01f, 0.01f), new Vector3f(300, 180, 0), 1);
 
 
-        skybox.SetDefaultSkybox();
+        skybox.setSkyBox("Textures/Sunset.dds");
         lightingManager.addSun(ColorRGBA.White);
     }
 
