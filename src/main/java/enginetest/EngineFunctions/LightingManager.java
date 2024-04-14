@@ -23,18 +23,9 @@ public class LightingManager {
         sun.setDirection(new Vector3f(100f, -75f, 0.5f).normalizeLocal());
         app.getRootNode().addLight(sun);
 
-        final int SHADOWMAP_SIZE=1024;
-        DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(app.getAssetManager(), SHADOWMAP_SIZE, 3);
-        dlsr.setLight(sun);
-        app.getViewPort().addProcessor(dlsr);
-
-        DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), SHADOWMAP_SIZE, 3);
-        dlsf.setLight(sun);
-        dlsf.setEnabled(true);
         FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
-        fpp.addFilter(dlsf);
 
-        SSAOFilter ssaoFilter = new SSAOFilter(0.3f, 1000f, 0.2f, 0.35f);
+        SSAOFilter ssaoFilter = new SSAOFilter(5.1f, 1.2f, 0.2f, 0.1f);
         fpp.addFilter(ssaoFilter);
         app.getViewPort().addProcessor(fpp);
     }
