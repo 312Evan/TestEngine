@@ -16,14 +16,14 @@ public class ModelManager {
 
     public void createModel(String modelPath, String texturePath, Vector3f position, Vector3f scale, Vector3f rotation, int objectId) {
         Spatial model = app.getAssetManager().loadModel(modelPath);
+        model.setShadowMode(ShadowMode.CastAndReceive);
         model.setLocalTranslation(position);
         model.setLocalScale(scale);
         model.rotate(rotation.x, rotation.y, rotation.z);
-        model.setShadowMode(ShadowMode.CastAndReceive);  
         model.setUserData("objectId", objectId);
 
         Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
-        Texture texture = app.getAssetManager().loadTexture(texturePath);
+        Texture texture = app.getAssetManager().loadTexture(texturePath); 
         mat.setTexture("DiffuseMap", texture);
         model.setMaterial(mat);
         app.getRootNode().attachChild(model);

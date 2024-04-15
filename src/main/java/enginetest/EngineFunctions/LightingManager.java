@@ -9,6 +9,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.ssao.SSAOFilter;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
+import com.jme3.scene.Spatial;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.shadow.EdgeFilteringMode;
@@ -37,7 +38,7 @@ public class LightingManager {
         dlsr.setLight(sun);
         dlsr.setLambda(0.55f);
         dlsr.setShadowIntensity(0.8f);
-        dlsr.setEdgeFilteringMode(EdgeFilteringMode.Nearest);
+        dlsr.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
         dlsr.setEnabledStabilization(true);
         dlsr.setShadowZExtend(1000);
         dlsr.displayDebug();
@@ -47,7 +48,7 @@ public class LightingManager {
         dlsf.setLight(sun);
         dlsf.setLambda(0.55f);
         dlsf.setShadowIntensity(0.8f);
-        dlsf.setEdgeFilteringMode(EdgeFilteringMode.Nearest);
+        dlsf.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
         dlsf.setEnabled(false);
 
         FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
