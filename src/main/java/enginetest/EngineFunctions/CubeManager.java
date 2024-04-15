@@ -43,9 +43,8 @@ public class CubeManager {
         mat.setColor("Diffuse", diffuseColor);
         mat.setColor("Specular", specularColor);
         mat.setFloat("Shininess", shininess);
-        mat.setReceivesShadows(true);
         geom.setMaterial(mat);
-
+        geom.setShadowMode(ShadowMode.CastAndReceive);
         app.getRootNode().attachChild(geom);
     }
 
@@ -60,9 +59,9 @@ public class CubeManager {
         Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
         Texture texture = app.getAssetManager().loadTexture(texturePath);
         texture.setWrap(Texture.WrapMode.Repeat);
-        mat.setReceivesShadows(true);
         mat.setTexture("DiffuseMap", texture);
         geom.setMaterial(mat);
+        geom.setShadowMode(ShadowMode.CastAndReceive);
         app.getRootNode().attachChild(geom);
     }
 
