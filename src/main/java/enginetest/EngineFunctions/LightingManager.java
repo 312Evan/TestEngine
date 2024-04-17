@@ -4,12 +4,12 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.PointLight;
+import com.jme3.light.SpotLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.ssao.SSAOFilter;
-import com.jme3.renderer.queue.RenderQueue.ShadowMode;
-import com.jme3.scene.Spatial;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.shadow.EdgeFilteringMode;
@@ -25,7 +25,7 @@ public class LightingManager {
         this.app = app;
     }
 
-    public void addSunlight() {
+    public void addSun() {
         AmbientLight ambientLight = new AmbientLight();
         ambientLight.setColor(ColorRGBA.White.mult(.6f));
         app.getRootNode().addLight(ambientLight);
@@ -41,7 +41,6 @@ public class LightingManager {
         dlsr.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
         dlsr.setEnabledStabilization(true);
         dlsr.setShadowZExtend(1000);
-        dlsr.displayDebug();
         app.getViewPort().addProcessor(dlsr);
 
         dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), 2048, 4);
@@ -63,5 +62,24 @@ public class LightingManager {
     
     public DirectionalLight getSun() {
         return sun;
+    }
+
+    public void addPointLight(Vector3f position, ColorRGBA color, float radius) {
+        PointLight pointLight = new PointLight();
+        pointLight.setColor(color);
+        pointLight.setRadius(radius);
+        pointLight.setPosition(position);
+        app.getRootNode().addLight(pointLight);
+    }
+
+    public void addSpotLight(Vector3f position, float innerAngle, float outerAngle, ColorRGBA color, float range) {
+        SpotLight spotLight = new SpotLight();
+        spotLight.setSpotRange(range);
+        spotLight.setSpotInnerAngle(innerAngle * FastMath.DEG_TO_RAD);
+        spotLight.setSpotOuterAngle(outerAngle * FastMath.DEG_TO_RAD);
+        spotLight.setColor(color);
+        spotLight.setPosition(position);
+        spotLight.setDirection(new Vector3f(-0.9f, -50f, -0.5f).normalizeLocal());
+        app.getRootNode().addLight(spotLight);
     }
 }

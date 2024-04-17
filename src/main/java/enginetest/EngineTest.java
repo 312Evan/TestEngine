@@ -13,6 +13,7 @@ public class EngineTest extends SimpleApplication {
     public Skybox skybox = new Skybox(this);
     public LightingManager lightingManager = new LightingManager(this);
     public ModelManager modelManager = new ModelManager(this);
+    public WaterManager waterManager = new WaterManager(this);
 
     ColorRGBA ambientColor = new ColorRGBA(0.2f, 0.2f, 0.2f, 1.0f);
     ColorRGBA diffuseColor = new ColorRGBA(0.5f, 0.5f, 0.5f, 1.0f);
@@ -47,9 +48,8 @@ public class EngineTest extends SimpleApplication {
         // modelManager.createModel("Models/oldcar2.fbx", "Textures/oldcar2.png", new Vector3f(3.5f, 0, 0), new Vector3f(0.025f, 0.025f, 0.025f), new Vector3f(300, 300, 0), 1);
         // modelManager.createModel("Models/building.fbx", "Textures/buildingTexture.png", new Vector3f(30, -0.1f, 70), new Vector3f(0.01f, 0.01f, 0.01f), new Vector3f(300, 180, 0),
         //         1);
-        
-        lightingManager.addSunlight();
 
+        lightingManager.addSun();
         skybox.setSkyBox("Textures/Sunset.dds");
     }
 
