@@ -13,7 +13,6 @@ public class EngineTest extends SimpleApplication {
     public Skybox skybox = new Skybox(this);
     public LightingManager lightingManager = new LightingManager(this);
     public ModelManager modelManager = new ModelManager(this);
-    public WaterManager waterManager = new WaterManager(this);
 
     ColorRGBA ambientColor = new ColorRGBA(0.2f, 0.2f, 0.2f, 1.0f);
     ColorRGBA diffuseColor = new ColorRGBA(0.5f, 0.5f, 0.5f, 1.0f);
