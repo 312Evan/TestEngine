@@ -46,6 +46,7 @@ public class LightingManager {
         dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), 2048, 4);
         dlsf.setLight(sun);
         dlsf.setLambda(0.55f);
+        dlsf.setEdgesThickness(2);
         dlsf.setShadowIntensity(0.8f);
         dlsf.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
         dlsf.setEnabled(false);

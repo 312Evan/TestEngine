@@ -16,6 +16,10 @@ public class Skybox {
         app.getRootNode().attachChild(SkyFactory.createSky(app.getAssetManager(), filepath, EnvMapType.CubeMap));
     }
 
+    public void setHDRSky(String filepath) {
+        app.getRootNode().attachChild(SkyFactory.createSky(app.getAssetManager(), filepath, SkyFactory.EnvMapType.EquirectMap));
+    }
+
     public void SetDefaultSkybox() {
         app.getRootNode().attachChild(SkyFactory.createSky(app.getAssetManager(), "Textures/BrightSky.dds", EnvMapType.CubeMap));
     }
