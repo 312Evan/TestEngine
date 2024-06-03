@@ -14,6 +14,7 @@ public class EngineTest extends SimpleApplication {
     ModelManager modelManager = new ModelManager(this);
     WaterManager waterManager = new WaterManager(this);
     PostProcessing post = new PostProcessing(this);
+    AudioManager audio = new AudioManager(this);
     
 
 
@@ -39,6 +40,7 @@ public class EngineTest extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        audio.playsound("Sounds/waves.wav", true);
         flyCam.setMoveSpeed(100);
 
         //Objects go here.
