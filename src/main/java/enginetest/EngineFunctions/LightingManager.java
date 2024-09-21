@@ -40,14 +40,14 @@ public class LightingManager {
         dlsr.setShadowIntensity(0.8f);
         dlsr.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
         dlsr.setEnabledStabilization(true);
-        dlsr.setShadowZExtend(1000);
+        dlsr.setShadowZExtend(150);
         app.getViewPort().addProcessor(dlsr);
 
         dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), 2048, 4);
         dlsf.setLight(sun);
         dlsf.setLambda(0.55f);
         dlsf.setEdgesThickness(2);
-        dlsf.setShadowIntensity(0.8f);
+        dlsf.setShadowIntensity(0.9f);
         dlsf.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
         dlsf.setEnabled(false);
 
