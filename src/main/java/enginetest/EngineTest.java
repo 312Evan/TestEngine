@@ -45,29 +45,30 @@ public class EngineTest extends SimpleApplication {
         stateManager.attach(bulletAppState);
 
         
-        // flyCam.setMoveSpeed(100);
+        flyCam.setMoveSpeed(100);
 
         //Objects go here.
-        modelManager.CreateTexturedCube(new Vector3f(200, 0.1f, 200), new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), "Textures/concrete.png", 75, 75, 0);
+        modelManager.CreateTexturedCube(new Vector3f(200, 200f, 200), new Vector3f(0, -150, 0), new Vector3f(0, 0, 0), "Textures/concrete.png", 75, 75, 0);
 
         //Lighting and Skybox
         skybox.setHDRSky("Textures/clearsky.hdr");
         lightingManager.addSun();
 
         //Post Processing goes here.
-        post.addBloom(0.9f);
+        post.addBloom(0.05f);
 
         //Water goes here.
+        waterManager.createWater(-1.5f);
             
         //player logic
-        modelManager.createThirdPersonController(new Vector3f(0,0,0));
+        // modelManager.createThirdPersonController(new Vector3f(0,0,0));
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-        if (modelManager != null) {
-            modelManager.update(tpf);
-        }
+        // if (modelManager != null) {
+        //     modelManager.update(tpf);
+        // }
     }
 
     @Override
