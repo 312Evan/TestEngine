@@ -2,9 +2,11 @@ package enginetest;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.ToneMapFilter;
+import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import enginetest.EngineFunctions.*;
@@ -18,6 +20,19 @@ public class EngineTest extends SimpleApplication {
     WaterManager waterManager = new WaterManager(this);
     PostProcessing post = new PostProcessing(this);
     private LoadingScreen loadingScreen;
+
+    private static String OS = null;
+
+    public static String getOsName() {
+        if (OS == null) {
+            OS = System.getProperty("os.name");
+        }
+        return OS;
+    }
+
+    public static boolean isWindows() {
+        return getOsName().startsWith("Windows");
+    }
 
     public int carNum = 0;
 
@@ -38,27 +53,32 @@ public class EngineTest extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         // Initialize the loading screen
-        loadingScreen = new LoadingScreen();
+        if (isWindows()) {loadingScreen = new LoadingScreen();}
 
         // Initialize physics
-        loadingScreen.setProgress(10);
+        if(isWindows()){loadingScreen.setProgress(14);}
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         flyCam.setMoveSpeed(100);
 
         // Load models
-        loadingScreen.setProgress(30);
-        modelManager.CreateTexturedCube(new Vector3f(200, 200f, 200), new Vector3f(0, -150, 0), new Vector3f(0, 0, 0), "Textures/Grass.png", 150, 150, 0);
-        modelManager.CreateTexturedCube(new Vector3f(50, 1f, 50), new Vector3f(0, 49.01f, 0), new Vector3f(0, 0, 0), "Textures/asphalt.jpg", 75, 75, 0);
-        // modelManager.createModel("Models/brickbuilding.obj","Textures/brickbuilding.jpeg", new Vector3f(0, 37.3f, 0), new Vector3f(2, 2, 2), new Vector3f(0, 0, 0), 5);
+        if(isWindows()){loadingScreen.setProgress(80);}
+        modelManager.CreateTexturedCube(new Vector3f(200, 200f, 200), new Vector3f(0, -300, 0), new Vector3f(0, 0, 0), "Textures/sand.jpg", 70, 70, 0);
+        // modelManager.CreateTexturedCube(new Vector3f(50, 1f, 50), new Vector3f(0, 49.01f, 0), new Vector3f(0, 0, 0), "Textures/brick.jpg", 20, 20, 0);
+        modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(0, -3f, 0), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
+        modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(24, -3f, 100), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
+        modelManager.createModel("Models/rubberduck.obj", "Textures/rubberduck.jpg", new Vector3f(0, -3f, 100), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
+        modelManager.createModel("Models/boulder.obj", "Textures/boulder.jpg", new Vector3f(-24, -3f, 50), new Vector3f(40, 40, 40), new Vector3f(0, 1.5f, 0), 5);
+        modelManager.createModel("Models/picnictable.obj", "Textures/wood.jpg", new Vector3f(-24, 62f, 50), new Vector3f(4, 4, 4), new Vector3f(-0.1f, 1.5f, 0), 5);
+        
 
         // Lighting and skybox
-        loadingScreen.setProgress(50);
-        skybox.setHDRSky("Textures/cloudy.hdr");
+        if(isWindows()){loadingScreen.setProgress(85);}
+        skybox.setHDRSky("Textures/sunset.hdr");
         lightingManager.addSun();
 
         // Post Processing
-        loadingScreen.setProgress(70);
+        if(isWindows()){loadingScreen.setProgress(90);}
         post.addBloom(1f);
 
 
@@ -69,14 +89,16 @@ public class EngineTest extends SimpleApplication {
         viewPort.addProcessor(fpp);
 
         // Water
-        loadingScreen.setProgress(90);
+        if(isWindows()){loadingScreen.setProgress(97);}
         waterManager.createWater(-1.5f);
+        waterManager.setWaterColor(ColorRGBA.fromRGBA255(56, 107, 79, 1), ColorRGBA.fromRGBA255(56, 107, 79, 1));
+        waterManager.setWaterTransparency(0.1f);
 
         // Finish loading
-        loadingScreen.setProgress(100);
+        if(isWindows()){loadingScreen.setProgress(100);}
 
         // Close the loading screen
-        loadingScreen.close();
+        if(isWindows()){loadingScreen.close();}
 
         // modelManager.createThirdPersonController(new Vector3f(0,0,0));
     }
