@@ -27,27 +27,27 @@ public class LightingManager {
 
     public void addSun() {
         AmbientLight ambientLight = new AmbientLight();
-        ambientLight.setColor(ColorRGBA.White.mult(.6f));
+        ambientLight.setColor(ColorRGBA.White.mult(1f));
         app.getRootNode().addLight(ambientLight);
 
         sun.setColor(new ColorRGBA(1.0f, 0.95f, 0.85f, 1.0f));
-        sun.setDirection(new Vector3f(-0.9f, -50f, -0.5f).normalizeLocal());
+        sun.setDirection(new Vector3f(-40f, -69f, -100f).normalizeLocal());
         app.getRootNode().addLight(sun);
 
-        dlsr = new DirectionalLightShadowRenderer(app.getAssetManager(), 2048, 4);
+        dlsr = new DirectionalLightShadowRenderer(app.getAssetManager(), 4096, 4);
         dlsr.setLight(sun);
-        dlsr.setLambda(0.55f);
-        dlsr.setShadowIntensity(0.8f);
+        dlsr.setLambda(0.1f);
+        dlsr.setShadowIntensity(0.7f);
         dlsr.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
         dlsr.setEnabledStabilization(true);
-        dlsr.setShadowZExtend(150);
+        dlsr.setShadowZExtend(500);
         app.getViewPort().addProcessor(dlsr);
 
-        dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), 2048, 4);
+        dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), 4096, 4);
         dlsf.setLight(sun);
         dlsf.setLambda(0.55f);
-        dlsf.setEdgesThickness(2);
-        dlsf.setShadowIntensity(0.9f);
+        dlsf.setEdgesThickness(1);
+        dlsf.setShadowIntensity(0.7f);
         dlsf.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
         dlsf.setEnabled(false);
 

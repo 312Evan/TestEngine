@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LoadingScreen",
+            "request": "launch",
+            "mainClass": "enginetest.EngineFunctions.LoadingScreen",
+            "projectName": "EngineTest"
+        },
+        {
+            "type": "java",
             "name": "Launch EngineTest",
             "request": "launch",
             "mainClass": "enginetest.EngineTest",
