@@ -64,13 +64,12 @@ public class EngineTest extends SimpleApplication {
         // Load models
         if(isWindows()){loadingScreen.setProgress(80);}
         modelManager.CreateTexturedCube(new Vector3f(200, 200f, 200), new Vector3f(0, -300, 0), new Vector3f(0, 0, 0), "Textures/sand.jpg", 70, 70, 0);
-        // modelManager.CreateTexturedCube(new Vector3f(50, 1f, 50), new Vector3f(0, 49.01f, 0), new Vector3f(0, 0, 0), "Textures/brick.jpg", 20, 20, 0);
         modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(0, -3f, 0), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
         modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(24, -3f, 100), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
         modelManager.createModel("Models/rubberduck.obj", "Textures/rubberduck.jpg", new Vector3f(0, -3f, 100), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
+        modelManager.createModel("Models/baseball.obj", "Textures/baseball.jpg", new Vector3f(-10, 0f, 110), new Vector3f(80, 80, 80), new Vector3f(0, 0, 0), 5);
         modelManager.createModel("Models/boulder.obj", "Textures/boulder.jpg", new Vector3f(-24, -3f, 50), new Vector3f(40, 40, 40), new Vector3f(0, 1.5f, 0), 5);
-        modelManager.createModel("Models/picnictable.obj", "Textures/wood.jpg", new Vector3f(-24, 62f, 50), new Vector3f(4, 4, 4), new Vector3f(-0.1f, 1.5f, 0), 5);
-        
+        modelManager.createModel("Models/picnictable.obj", "Textures/wood.jpg", new Vector3f(-24, 62f, 50), new Vector3f(4, 4, 4), new Vector3f(-0.1f, 1.5f, 0), 5);     
 
         // Lighting and skybox
         if(isWindows()){loadingScreen.setProgress(85);}
