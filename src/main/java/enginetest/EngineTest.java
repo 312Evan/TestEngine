@@ -6,7 +6,6 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.ToneMapFilter;
-import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import enginetest.EngineFunctions.*;
@@ -40,7 +39,7 @@ public class EngineTest extends SimpleApplication {
         EngineTest app = new EngineTest();
         AppSettings settings = new AppSettings(true);
         settings.setVSync(false);
-        settings.setResolution(1200, 720);
+        settings.setResolution(1400, 820);
         settings.setResizable(true);
         settings.setFullscreen(false);
         settings.setGammaCorrection(true);

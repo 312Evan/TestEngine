@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Random;
 import javax.imageio.ImageIO;
 
 public class LoadingScreen extends JFrame {
@@ -13,9 +14,20 @@ public class LoadingScreen extends JFrame {
     private BufferedImage backgroundImage;
     Font defaultfont = new Font("Apple Casual", Font.PLAIN, 30);
 
+    // Array of image URLs
+    private String[] imageUrls = {
+        "https://cdn.discordapp.com/attachments/1291853060620161187/1296871197925183751/Screenshot_2024-10-18_at_12.06.01_PM.png?ex=6713dcec&is=67128b6c&hm=da904d07f5e52ccf4ed3e7c4917a5080d4c93009a1e3932c3a93250cb5f891aa",
+        "https://cdn.discordapp.com/attachments/1291853060620161187/1296591163532251208/Screenshot_2024-10-17_172517.png?ex=671380de&is=67122f5e&hm=f5ede2230e269bfea25fe12da6526886034496e95e072b9faaab080b4ec8dc75&"
+    };
+
     public LoadingScreen() {
         try {
-            URL imageUrl = new URL("https://cdn.discordapp.com/attachments/1291853060620161187/1296591163532251208/Screenshot_2024-10-17_172517.png?ex=6712d81e&is=6711869e&hm=bc206ee10465d34581850eccbbedf6c56d49a341cf3d8544005064f013b28913&"); // Replace with actual URL
+            // Randomly select an image URL from the array
+            Random random = new Random();
+            int randomIndex = random.nextInt(imageUrls.length);
+            URL imageUrl = new URL(imageUrls[randomIndex]);
+            
+            // Load the selected image
             backgroundImage = ImageIO.read(imageUrl);
             
             if (backgroundImage != null) {
