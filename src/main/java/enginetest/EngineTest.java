@@ -19,6 +19,7 @@ public class EngineTest extends SimpleApplication {
     WaterManager waterManager = new WaterManager(this);
     PostProcessing post = new PostProcessing(this);
     private LoadingScreen loadingScreen;
+    int time;
 
     private static String OS = null;
 
@@ -39,7 +40,7 @@ public class EngineTest extends SimpleApplication {
         EngineTest app = new EngineTest();
         AppSettings settings = new AppSettings(true);
         settings.setVSync(false);
-        settings.setResolution(1400, 820);
+        settings.setResolution(1200, 700);
         settings.setResizable(true);
         settings.setFullscreen(false);
         settings.setGammaCorrection(true);
@@ -51,6 +52,8 @@ public class EngineTest extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        cam.setFrustumFar(3000);
+
         // Initialize the loading screen
         if (isWindows()) {loadingScreen = new LoadingScreen();}
 
@@ -65,19 +68,17 @@ public class EngineTest extends SimpleApplication {
         modelManager.CreateTexturedCube(new Vector3f(200, 200f, 200), new Vector3f(0, -300, 0), new Vector3f(0, 0, 0), "Textures/sand.jpg", 70, 70, 0);
         modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(0, -3f, 0), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
         modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(24, -3f, 100), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
-        modelManager.createModel("Models/rubberduck.obj", "Textures/rubberduck.jpg", new Vector3f(0, -3f, 100), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
-        modelManager.createModel("Models/baseball.obj", "Textures/baseball.jpg", new Vector3f(-10, 0f, 110), new Vector3f(80, 80, 80), new Vector3f(0, 0, 0), 5);
-        modelManager.createModel("Models/boulder.obj", "Textures/boulder.jpg", new Vector3f(-24, -3f, 50), new Vector3f(40, 40, 40), new Vector3f(0, 1.5f, 0), 5);
-        modelManager.createModel("Models/picnictable.obj", "Textures/wood.jpg", new Vector3f(-24, 62f, 50), new Vector3f(4, 4, 4), new Vector3f(-0.1f, 1.5f, 0), 5);     
+        modelManager.createModel("Models/boulder.obj", "Textures/boulder.jpg", new Vector3f(-24, -5f, 50), new Vector3f(40, 40, 40), new Vector3f(0, 1.5f, 0), 5);
+        modelManager.createModel("Models/picnictable.obj", "Textures/wood.jpg", new Vector3f(-24, 59f, 50), new Vector3f(4, 4, 4), new Vector3f(-0.1f, 1.5f, 0), 5);
+        modelManager.createModel("Models/tree.obj", "Textures/tree.jpg", new Vector3f(-12, 59f, 30), new Vector3f(30, 30, 30), new Vector3f(0, 0, 0), 5);
+        modelManager.createModel("Models/tree.obj", "Textures/tree.jpg", new Vector3f(-30, 55f, 60), new Vector3f(30, 30, 30), new Vector3f(0.1f, 0, 0.1f), 5);
+        
+        modelManager.CreateTexturedCube(new Vector3f(100, 100f, 100), new Vector3f(200, -100, 200), new Vector3f(0, 0, 0), "Textures/Grass.png", 70, 70, 0);
 
         // Lighting and skybox
         if(isWindows()){loadingScreen.setProgress(85);}
-        skybox.setHDRSky("Textures/sunset.hdr");
         lightingManager.addSun();
-
-        // Post Processing
-        if(isWindows()){loadingScreen.setProgress(90);}
-        post.addBloom(1f);
+        skybox.setHDRSky("Textures/partlycloudy.hdr");
 
 
         //KEEP HERE
@@ -85,6 +86,12 @@ public class EngineTest extends SimpleApplication {
         ToneMapFilter toneMap = new ToneMapFilter();
         fpp.addFilter(toneMap);
         viewPort.addProcessor(fpp);
+
+        // Post Processing
+        if (isWindows()) {
+            loadingScreen.setProgress(90);
+        }
+        post.addBloom(1f);
 
         // Water
         if(isWindows()){loadingScreen.setProgress(97);}
@@ -103,7 +110,7 @@ public class EngineTest extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-                // if (modelManager != null) {
+        // if (modelManager != null) {
         //     modelManager.update(tpf);
         // }
     }
