@@ -73,7 +73,7 @@ public class EngineTest extends SimpleApplication {
         modelManager.createModel("Models/tree.obj", "Textures/tree.jpg", new Vector3f(-12, 59f, 30), new Vector3f(30, 30, 30), new Vector3f(0, 0, 0), 5);
         modelManager.createModel("Models/tree.obj", "Textures/tree.jpg", new Vector3f(-30, 55f, 60), new Vector3f(30, 30, 30), new Vector3f(0.1f, 0, 0.1f), 5);
         
-        modelManager.CreateTexturedCube(new Vector3f(100, 100f, 100), new Vector3f(200, -100, 200), new Vector3f(0, 0, 0), "Textures/Grass.png", 70, 70, 0);
+        modelManager.CreateTexturedCubeWithNormal(new Vector3f(100, 100f, 100), new Vector3f(200, -100, 200), new Vector3f(0, 0, 0), "Textures/notexture.png", "Textures/rockNormal.jpg", 70, 70, 0);
 
         // Lighting and skybox
         if(isWindows()){loadingScreen.setProgress(85);}

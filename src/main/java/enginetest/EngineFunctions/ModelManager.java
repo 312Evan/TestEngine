@@ -108,6 +108,31 @@ public class ModelManager {
         addPhysics(geom, new SphereCollisionShape(radius), 0);
     }
 
+    public void CreateTexturedCubeWithNormal(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, String normalMapPath, float tileX, float tileY, int objectId) {
+        Box b = new Box(size.x, size.y, size.z);
+        Geometry geom = new Geometry("Box", b);
+        b.scaleTextureCoordinates(new Vector2f(tileX, tileY));
+        geom.rotate(rotation.x, rotation.y, rotation.z);
+        geom.setLocalTranslation(position);
+        geom.setUserData("objectId", objectId);
+
+        Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+        Texture texture = app.getAssetManager().loadTexture(texturePath);
+        texture.setWrap(Texture.WrapMode.Repeat);
+        mat.setTexture("DiffuseMap", texture);
+
+        // Load and set the normal map
+        Texture normalMap = app.getAssetManager().loadTexture(normalMapPath);
+        normalMap.setWrap(Texture.WrapMode.Repeat);
+        mat.setTexture("NormalMap", normalMap);
+
+        geom.setMaterial(mat);
+        geom.setShadowMode(ShadowMode.CastAndReceive);
+
+        app.getRootNode().attachChild(geom);
+        addPhysics(geom, new BoxCollisionShape(size), 0);
+    }
+
     public void CreatePyramid(float radius, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int objectId) {
         Dome mesh = new Dome(position, 2, 4, radius, false);
         Geometry geom = new Geometry("Pyramid", mesh);
