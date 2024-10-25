@@ -52,5 +52,4 @@ public class WaterManager {
     public WaterFilter getWater() {
         return water;
     }
-
 }

@@ -65,15 +65,15 @@ public class EngineTest extends SimpleApplication {
 
         // Load models
         if(isWindows()){loadingScreen.setProgress(80);}
-        modelManager.CreateTexturedCube(new Vector3f(200, 200f, 200), new Vector3f(0, -300, 0), new Vector3f(0, 0, 0), "Textures/sand.jpg", 70, 70, 0);
-        modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(0, -3f, 0), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
-        modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(24, -3f, 100), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
-        modelManager.createModel("Models/boulder.obj", "Textures/boulder.jpg", new Vector3f(-24, -5f, 50), new Vector3f(40, 40, 40), new Vector3f(0, 1.5f, 0), 5);
-        modelManager.createModel("Models/picnictable.obj", "Textures/wood.jpg", new Vector3f(-24, 59f, 50), new Vector3f(4, 4, 4), new Vector3f(-0.1f, 1.5f, 0), 5);
-        modelManager.createModel("Models/tree.obj", "Textures/tree.jpg", new Vector3f(-12, 59f, 30), new Vector3f(30, 30, 30), new Vector3f(0, 0, 0), 5);
-        modelManager.createModel("Models/tree.obj", "Textures/tree.jpg", new Vector3f(-30, 55f, 60), new Vector3f(30, 30, 30), new Vector3f(0.1f, 0, 0.1f), 5);
-        
-        modelManager.CreateTexturedCubeWithNormal(new Vector3f(100, 100f, 100), new Vector3f(200, -100, 200), new Vector3f(0, 0, 0), "Textures/notexture.png", "Textures/rockNormal.jpg", 70, 70, 0);
+        // modelManager.CreateTexturedCube(new Vector3f(200, 200f, 200), new Vector3f(0, -300, 0), new Vector3f(0, 0, 0), "Textures/sand.jpg", 70, 70, 0);
+        // modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(0, -3f, 0), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
+        // modelManager.createModel("Models/stone.obj", "Textures/stone.png", new Vector3f(24, -3f, 100), new Vector3f(40, 40, 40), new Vector3f(0, 0, 0), 5);
+        // modelManager.createModel("Models/boulder.obj", "Textures/boulder.jpg", new Vector3f(-24, -5f, 50), new Vector3f(40, 40, 40), new Vector3f(0, 1.5f, 0), 5);
+        // modelManager.createModel("Models/picnictable.obj", "Textures/wood.jpg", new Vector3f(-24, 59f, 50), new Vector3f(4, 4, 4), new Vector3f(-0.1f, 1.5f, 0), 5);
+        // modelManager.createModel("Models/tree.obj", "Textures/tree.jpg", new Vector3f(-12, 59f, 30), new Vector3f(30, 30, 30), new Vector3f(0, 0, 0), 5);
+        // modelManager.createModel("Models/tree.obj", "Textures/tree.jpg", new Vector3f(-30, 55f, 60), new Vector3f(30, 30, 30), new Vector3f(0.1f, 0, 0.1f), 5);
+
+        modelManager.loadCubesFromJson(assetManager);
 
         // Lighting and skybox
         if(isWindows()){loadingScreen.setProgress(85);}
@@ -95,9 +95,9 @@ public class EngineTest extends SimpleApplication {
 
         // Water
         if(isWindows()){loadingScreen.setProgress(97);}
-        waterManager.createWater(-1.5f);
-        waterManager.setWaterColor(ColorRGBA.fromRGBA255(56, 107, 79, 1), ColorRGBA.fromRGBA255(56, 107, 79, 1));
-        waterManager.setWaterTransparency(0.1f);
+        // waterManager.createWater(-1.5f);
+        // waterManager.setWaterColor(ColorRGBA.fromRGBA255(56, 107, 79, 1), ColorRGBA.fromRGBA255(56, 107, 79, 1));
+        // waterManager.setWaterTransparency(0.1f);
 
         // Finish loading
         if(isWindows()){loadingScreen.setProgress(100);}

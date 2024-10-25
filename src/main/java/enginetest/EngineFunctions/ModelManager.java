@@ -1,6 +1,13 @@
 package enginetest.EngineFunctions;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
@@ -50,7 +57,8 @@ public class ModelManager {
         addPhysics(geom, new BoxCollisionShape(size), 0);
     }
 
-    public void CreateShadedSolidCube(Vector3f size, Vector3f position, Vector3f rotation, ColorRGBA ambientColor, ColorRGBA diffuseColor, ColorRGBA specularColor, float shininess, int objectId) {
+    public void CreateShadedSolidCube(Vector3f size, Vector3f position, Vector3f rotation, ColorRGBA ambientColor, ColorRGBA diffuseColor, ColorRGBA specularColor, float shininess,
+            int objectId) {
         Box b = new Box(size.x, size.y, size.z);
         Geometry geom = new Geometry("Box", b);
         geom.rotate(rotation.x, rotation.y, rotation.z);
@@ -108,7 +116,8 @@ public class ModelManager {
         addPhysics(geom, new SphereCollisionShape(radius), 0);
     }
 
-    public void CreateTexturedCubeWithNormal(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, String normalMapPath, float tileX, float tileY, int objectId) {
+    public void CreateTexturedCubeWithNormal(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, String normalMapPath, float tileX, float tileY,
+            int objectId) {
         Box b = new Box(size.x, size.y, size.z);
         Geometry geom = new Geometry("Box", b);
         b.scaleTextureCoordinates(new Vector2f(tileX, tileY));
@@ -261,7 +270,8 @@ public class ModelManager {
         player.setPhysicsLocation(position);
         playerModel.addControl(player);
 
-        // Get the BulletAppState from the app (you need to have it initialized somewhere)
+        // Get the BulletAppState from the app (you need to have it initialized
+        // somewhere)
         BulletAppState bulletAppState = app.getStateManager().getState(BulletAppState.class);
         bulletAppState.getPhysicsSpace().add(player);
 
@@ -313,5 +323,57 @@ public class ModelManager {
             walkDirection.addLocal(camDir.negate());
         }
         player.setWalkDirection(walkDirection);
+    }
+
+    public void loadCubesFromJson(AssetManager assetManager) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/cubes.json")).openStream()) {
+            JsonNode root = mapper.readTree(is);
+            for (JsonNode cubeNode : root.get("cubes")) {
+                JsonNode addCube = cubeNode.get("addcube");
+
+                Vector3f size = new Vector3f((float) addCube.get("size").get("x").asDouble(), (float) addCube.get("size").get("y").asDouble(),
+                        (float) addCube.get("size").get("z").asDouble());
+                Vector3f position = new Vector3f((float) addCube.get("position").get("x").asDouble(), (float) addCube.get("position").get("y").asDouble(),
+                        (float) addCube.get("position").get("z").asDouble());
+                Vector3f rotation = new Vector3f((float) addCube.get("rotation").get("x").asDouble(), (float) addCube.get("rotation").get("y").asDouble(),
+                        (float) addCube.get("rotation").get("z").asDouble());
+                int objectId = addCube.get("objectId").asInt();
+
+                // Determine cube type and create accordingly
+                if (addCube.has("color")) {
+                    // Unshaded Cube
+                    ColorRGBA color = new ColorRGBA((float) addCube.get("color").get("r").asDouble(), (float) addCube.get("color").get("g").asDouble(),
+                            (float) addCube.get("color").get("b").asDouble(), (float) addCube.get("color").get("a").asDouble());
+                    CreateUnshadedCube(size, position, rotation, color, objectId);
+                } else if (addCube.has("ambientColor") && addCube.has("diffuseColor") && addCube.has("specularColor")) {
+                    // Shaded Solid Cube
+                    ColorRGBA ambientColor = new ColorRGBA((float) addCube.get("ambientColor").get("r").asDouble(), (float) addCube.get("ambientColor").get("g").asDouble(),
+                            (float) addCube.get("ambientColor").get("b").asDouble(), (float) addCube.get("ambientColor").get("a").asDouble());
+                    ColorRGBA diffuseColor = new ColorRGBA((float) addCube.get("diffuseColor").get("r").asDouble(), (float) addCube.get("diffuseColor").get("g").asDouble(),
+                            (float) addCube.get("diffuseColor").get("b").asDouble(), (float) addCube.get("diffuseColor").get("a").asDouble());
+                    ColorRGBA specularColor = new ColorRGBA((float) addCube.get("specularColor").get("r").asDouble(), (float) addCube.get("specularColor").get("g").asDouble(),
+                            (float) addCube.get("specularColor").get("b").asDouble(), (float) addCube.get("specularColor").get("a").asDouble());
+                    float shininess = (float) addCube.get("shininess").asDouble();
+                    CreateShadedSolidCube(size, position, rotation, ambientColor, diffuseColor, specularColor, shininess, objectId);
+                } else if (addCube.has("texturePath") && addCube.has("normalMapPath")) {
+                    // Textured Cube with Normal Map
+                    String texturePath = addCube.get("texturePath").asText();
+                    String normalMapPath = addCube.get("normalMapPath").asText();
+                    float tileX = (float) addCube.get("tileX").asDouble();
+                    float tileY = (float) addCube.get("tileY").asDouble();
+                    CreateTexturedCubeWithNormal(size, position, rotation, texturePath, normalMapPath, tileX, tileY, objectId);
+                } else if (addCube.has("texturePath")) {
+                    // Simple Textured Cube
+                    String texturePath = addCube.get("texturePath").asText();
+                    float tileX = (float) addCube.get("tileX").asDouble();
+                    float tileY = (float) addCube.get("tileY").asDouble();
+                    CreateTexturedCube(size, position, rotation, texturePath, tileX, tileY, objectId);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
