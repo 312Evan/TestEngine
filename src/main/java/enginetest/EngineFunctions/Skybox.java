@@ -61,9 +61,9 @@ public class Skybox {
                 boolean hdrSkybox = addLight.get("hdrSkybox").asBoolean();
                 String skyboxPath = addLight.get("skyboxPath").asText();
 
-                if (hdrSkybox) {
+                if (hdrSkybox && skyboxPath != null) {
                     setHDRSky(skyboxPath);
-                } else if (!hdrSkybox) {
+                } else if (!hdrSkybox && skyboxPath != null) {
                     setSkyBox(skyboxPath);
                 } else {
                     SetDefaultSkybox();

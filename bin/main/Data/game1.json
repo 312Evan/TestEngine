@@ -1,0 +1,24 @@
+{
+    "cubes": [
+        {
+            "addcube": {
+
+            }
+        }
+    ],
+    "lighting": [
+        {
+            "addlight": {
+                "sunDirection": {
+                    "x": -40,
+                    "y": -69,
+                    "z": -100
+                },
+                "hdrSkybox": false,
+                "skyboxPath": "Textures/Sunset.dds",
+                "enableBloom": true,
+                "bloomIntensity": 1
+            }
+        }
+    ]
+}
