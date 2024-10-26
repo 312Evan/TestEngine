@@ -1,6 +1,11 @@
 package enginetest.EngineFunctions;
 
+import java.io.InputStream;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetManager;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
@@ -51,5 +56,35 @@ public class WaterManager {
 
     public WaterFilter getWater() {
         return water;
+    }
+
+    public void loadWaterFromJson(AssetManager assetManager) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
+            JsonNode root = mapper.readTree(is);
+            for (JsonNode waterNode : root.get("water")) {
+                JsonNode addWater = waterNode.get("addocean");
+
+                double transparency = addWater.get("waterTransparency").asDouble();
+                double waterHeight = addWater.get("waterHeight").asDouble();
+                int colorR = addWater.get("waterColor").get("r").asInt();
+                int colorG = addWater.get("waterColor").get("g").asInt();
+                int colorB = addWater.get("waterColor").get("b").asInt();
+                int colorA = addWater.get("waterColor").get("a").asInt();
+                int deepR = addWater.get("deepWaterColor").get("r").asInt();
+                int deepG = addWater.get("deepWaterColor").get("g").asInt();
+                int deepB = addWater.get("deepWaterColor").get("b").asInt();
+                int deepA = addWater.get("deepWaterColor").get("a").asInt();
+                boolean foam = addWater.get("foam").asBoolean();
+
+                createWater((float) waterHeight);
+                setWaterTransparency((float) transparency);
+                setWaterColor(ColorRGBA.fromRGBA255(colorR, colorG, colorB, colorA), ColorRGBA.fromRGBA255(deepR, deepG, deepB, deepA));
+                Foam(foam);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

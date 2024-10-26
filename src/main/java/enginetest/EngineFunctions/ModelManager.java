@@ -1,7 +1,5 @@
 package enginetest.EngineFunctions;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -328,7 +326,7 @@ public class ModelManager {
     public void loadCubesFromJson(AssetManager assetManager) {
         ObjectMapper mapper = new ObjectMapper();
 
-        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/cubes.json")).openStream()) {
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
             JsonNode root = mapper.readTree(is);
             for (JsonNode cubeNode : root.get("cubes")) {
                 JsonNode addCube = cubeNode.get("addcube");
@@ -341,14 +339,11 @@ public class ModelManager {
                         (float) addCube.get("rotation").get("z").asDouble());
                 int objectId = addCube.get("objectId").asInt();
 
-                // Determine cube type and create accordingly
                 if (addCube.has("color")) {
-                    // Unshaded Cube
                     ColorRGBA color = new ColorRGBA((float) addCube.get("color").get("r").asDouble(), (float) addCube.get("color").get("g").asDouble(),
                             (float) addCube.get("color").get("b").asDouble(), (float) addCube.get("color").get("a").asDouble());
                     CreateUnshadedCube(size, position, rotation, color, objectId);
                 } else if (addCube.has("ambientColor") && addCube.has("diffuseColor") && addCube.has("specularColor")) {
-                    // Shaded Solid Cube
                     ColorRGBA ambientColor = new ColorRGBA((float) addCube.get("ambientColor").get("r").asDouble(), (float) addCube.get("ambientColor").get("g").asDouble(),
                             (float) addCube.get("ambientColor").get("b").asDouble(), (float) addCube.get("ambientColor").get("a").asDouble());
                     ColorRGBA diffuseColor = new ColorRGBA((float) addCube.get("diffuseColor").get("r").asDouble(), (float) addCube.get("diffuseColor").get("g").asDouble(),
@@ -358,19 +353,42 @@ public class ModelManager {
                     float shininess = (float) addCube.get("shininess").asDouble();
                     CreateShadedSolidCube(size, position, rotation, ambientColor, diffuseColor, specularColor, shininess, objectId);
                 } else if (addCube.has("texturePath") && addCube.has("normalMapPath")) {
-                    // Textured Cube with Normal Map
                     String texturePath = addCube.get("texturePath").asText();
                     String normalMapPath = addCube.get("normalMapPath").asText();
                     float tileX = (float) addCube.get("tileX").asDouble();
                     float tileY = (float) addCube.get("tileY").asDouble();
                     CreateTexturedCubeWithNormal(size, position, rotation, texturePath, normalMapPath, tileX, tileY, objectId);
                 } else if (addCube.has("texturePath")) {
-                    // Simple Textured Cube
                     String texturePath = addCube.get("texturePath").asText();
                     float tileX = (float) addCube.get("tileX").asDouble();
                     float tileY = (float) addCube.get("tileY").asDouble();
                     CreateTexturedCube(size, position, rotation, texturePath, tileX, tileY, objectId);
                 }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadModelsFromJson(AssetManager assetManager) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
+            JsonNode root = mapper.readTree(is);
+            for (JsonNode modelNode : root.get("models")) {
+                JsonNode addModel = modelNode.get("addmodel");
+
+                Vector3f size = new Vector3f((float) addModel.get("size").get("x").asDouble(), (float) addModel.get("size").get("y").asDouble(),
+                        (float) addModel.get("size").get("z").asDouble());
+                Vector3f position = new Vector3f((float) addModel.get("position").get("x").asDouble(), (float) addModel.get("position").get("y").asDouble(),
+                        (float) addModel.get("position").get("z").asDouble());
+                Vector3f rotation = new Vector3f((float) addModel.get("rotation").get("x").asDouble(), (float) addModel.get("rotation").get("y").asDouble(),
+                        (float) addModel.get("rotation").get("z").asDouble());
+                String texturePath = addModel.get("texturePath").asText();
+                String modelPath = addModel.get("modelPath").asText();
+                int objectId = addModel.get("objectId").asInt();
+
+                createModel(modelPath, texturePath, position, size, rotation, objectId);
             }
         } catch (Exception e) {
             e.printStackTrace();

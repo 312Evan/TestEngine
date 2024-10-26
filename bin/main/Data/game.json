@@ -1,0 +1,175 @@
+{
+    "cubes": [
+        {
+            "addcube": {
+                "size": {
+                    "x": 200,
+                    "y": 200,
+                    "z": 200
+                },
+                "position": {
+                    "x": 0,
+                    "y": -300,
+                    "z": 0
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "Textures/sand.jpg",
+                "tileX": 70,
+                "tileY": 70,
+                "objectId": 1
+            }
+        }
+    ],
+    "models": [
+        {
+            "addmodel": {
+                "size": {
+                    "x": 40.0,
+                    "y": 40.0,
+                    "z": 40.0
+                },
+                "position": {
+                    "x": -24,
+                    "y": -5,
+                    "z": 50
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 1.5,
+                    "z": 0.0
+                },
+                "texturePath": "Textures/boulder.jpg",
+                "modelPath": "Models/boulder.obj",
+                "objectId": 1
+            }
+        },
+        {
+            "addmodel": {
+                "size": {
+                    "x": 40,
+                    "y": 40,
+                    "z": 40
+                },
+                "position": {
+                    "x": 0,
+                    "y": -3,
+                    "z": 0
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "texturePath": "Textures/stone.png",
+                "modelPath": "Models/stone.obj",
+                "objectId": 1
+            }
+        },
+        {
+            "addmodel": {
+                "size": {
+                    "x": 40,
+                    "y": 40,
+                    "z": 40
+                },
+                "position": {
+                    "x": 24,
+                    "y": -3,
+                    "z": 100
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "texturePath": "Textures/stone.png",
+                "modelPath": "Models/stone.obj",
+                "objectId": 1
+            }
+        },
+        {
+            "addmodel": {
+                "size": {
+                    "x": 30,
+                    "y": 30,
+                    "z": 30
+                },
+                "position": {
+                    "x": -12,
+                    "y": 59,
+                    "z": 30
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "texturePath": "Textures/tree.jpg",
+                "modelPath": "Models/tree.obj",
+                "objectId": 1
+            }
+        },
+        {
+            "addmodel": {
+                "size": {
+                    "x": 30,
+                    "y": 30,
+                    "z": 30
+                },
+                "position": {
+                    "x": -30,
+                    "y": 55,
+                    "z": 60
+                },
+                "rotation": {
+                    "x": 0.1,
+                    "y": 0.0,
+                    "z": 0.1
+                },
+                "texturePath": "Textures/tree.jpg",
+                "modelPath": "Models/tree.obj",
+                "objectId": 1
+            }
+        }
+    ],
+    "water": [
+        {
+            "addocean": {
+                "foam": true,
+                "waterHeight": -1.5,
+                "waterTransparency": 0.1,
+                "waterColor": {
+                    "r": 56,
+                    "g": 107,
+                    "b": 79,
+                    "a": 1
+                },
+                "deepWaterColor": {
+                    "r": 56,
+                    "g": 107,
+                    "b": 79,
+                    "a": 1
+                }
+            }
+        }
+    ],
+    "lighting": [
+        {
+            "addlight": {
+                "sunDirection": {
+                    "x": -40,
+                    "y": -69,
+                    "z": -100
+                },
+                "hdrSkybox": true,
+                "skyboxPath": "Textures/partlycloudy.hdr",
+                "enableBloom": true,
+                "bloomIntensity": 1
+            }
+        }
+    ]
+}

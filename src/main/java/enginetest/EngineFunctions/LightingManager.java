@@ -1,6 +1,11 @@
 package enginetest.EngineFunctions;
 
+import java.io.InputStream;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetManager;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.PointLight;
@@ -25,13 +30,13 @@ public class LightingManager {
         this.app = app;
     }
 
-    public void addSun() {
+    public void addSun(Vector3f sunDirection) {
         AmbientLight ambientLight = new AmbientLight();
         ambientLight.setColor(ColorRGBA.White.mult(1.5f));
         app.getRootNode().addLight(ambientLight);
 
         sun.setColor(new ColorRGBA(1.0f, 0.95f, 0.85f, 1.0f));
-        sun.setDirection(new Vector3f(-40f, -69f, -100f).normalizeLocal());
+        sun.setDirection(sunDirection.normalizeLocal());
         app.getRootNode().addLight(sun);
 
         dlsr = new DirectionalLightShadowRenderer(app.getAssetManager(), 4096, 4);
@@ -82,5 +87,24 @@ public class LightingManager {
         spotLight.setPosition(position);
         spotLight.setDirection(new Vector3f(-0.9f, -50f, -0.5f).normalizeLocal());
         app.getRootNode().addLight(spotLight);
+    }
+
+    public void loadLightingFromJson(AssetManager assetManager) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
+            JsonNode root = mapper.readTree(is);
+            for (JsonNode lightingNode : root.get("lighting")) {
+                JsonNode addLight = lightingNode.get("addlight");
+
+                double sunDirectionX = addLight.get("sunDirection").get("x").asDouble();
+                double sunDirectionY = addLight.get("sunDirection").get("y").asDouble();
+                double sunDirectionZ = addLight.get("sunDirection").get("z").asDouble();
+
+                addSun(new Vector3f((float) sunDirectionX, (float) sunDirectionY, (float) sunDirectionZ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
