@@ -136,6 +136,46 @@
             }
         }
     ],
+    "shapes": [
+        {
+            "addsphere": {
+                "radius": 100,
+                "position": {
+                    "x": 300,
+                    "y": 0.0,
+                    "z": 0.1
+                },
+                "rotation": {
+                    "x": 0.1,
+                    "y": 0.0,
+                    "z": 0.1
+                },
+                "texturePath": "Textures/concrete.png",
+                "tileX": 1,
+                "tileY": 1,
+                "objectId": 1
+            }
+        },
+        {
+            "addpyramid": {
+                "radius": 10,
+                "position": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "Textures/concrete.png",
+                "tileX": 1,
+                "tileY": 1,
+                "objectId": 1
+            }
+        }
+    ],
     "water": [
         {
             "addocean": {

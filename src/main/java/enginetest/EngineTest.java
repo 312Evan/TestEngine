@@ -2,8 +2,7 @@ package enginetest;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.post.FilterPostProcessor;
-import com.jme3.post.filters.ToneMapFilter;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import enginetest.EngineFunctions.*;
@@ -12,6 +11,7 @@ import enginetest.EngineFunctions.*;
 public class EngineTest extends SimpleApplication {
     private BulletAppState bulletAppState;
     LoadingManager loadingManager = new LoadingManager(this);
+    ModelManager modelManager = new ModelManager(this);
 
     public static void main(String[] args) {
         EngineTest app = new EngineTest();

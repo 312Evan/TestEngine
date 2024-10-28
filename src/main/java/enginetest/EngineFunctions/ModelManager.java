@@ -394,4 +394,54 @@ public class ModelManager {
             e.printStackTrace();
         }
     }
+
+    public void loadSpheresFromJson(AssetManager assetManager) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
+            JsonNode root = mapper.readTree(is);
+            for (JsonNode shapeNode : root.get("shapes")) {
+                JsonNode addSphere = shapeNode.get("addsphere");
+
+                float radius = (float) addSphere.get("radius").asDouble();
+                Vector3f position = new Vector3f((float) addSphere.get("position").get("x").asDouble(), (float) addSphere.get("position").get("y").asDouble(),
+                        (float) addSphere.get("position").get("z").asDouble());
+                Vector3f rotation = new Vector3f((float) addSphere.get("rotation").get("x").asDouble(), (float) addSphere.get("rotation").get("y").asDouble(),
+                        (float) addSphere.get("rotation").get("z").asDouble());
+                String texturePath = addSphere.get("texturePath").asText();
+                int tileX = addSphere.get("tileX").asInt();
+                int tileY = addSphere.get("tileY").asInt();
+                int objectId = addSphere.get("objectId").asInt();
+
+                CreateSphere(radius, position, rotation, texturePath, tileX, tileY, objectId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void loadPyramidsFromJson(AssetManager assetManager) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
+            JsonNode root = mapper.readTree(is);
+            for (JsonNode shapeNode : root.get("shapes")) {
+                JsonNode addPyramid = shapeNode.get("addpyramid");
+
+                float radius = (float) addPyramid.get("radius").asDouble();
+                Vector3f position = new Vector3f((float) addPyramid.get("position").get("x").asDouble(), (float) addPyramid.get("position").get("y").asDouble(),
+                        (float) addPyramid.get("position").get("z").asDouble());
+                Vector3f rotation = new Vector3f((float) addPyramid.get("rotation").get("x").asDouble(), (float) addPyramid.get("rotation").get("y").asDouble(),
+                        (float) addPyramid.get("rotation").get("z").asDouble());
+                String texturePath = addPyramid.get("texturePath").asText();
+                int tileX = addPyramid.get("tileX").asInt();
+                int tileY = addPyramid.get("tileY").asInt();
+                int objectId = addPyramid.get("objectId").asInt();
+
+                CreatePyramid(radius, position, rotation, texturePath, tileX, tileY, objectId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

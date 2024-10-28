@@ -17,15 +17,15 @@ public class WaterManager {
 
     private FilterPostProcessor fpp;
     private WaterFilter water;
-    private Vector3f lightDir = new Vector3f(-4.9f, -1.3f, 5.9f);
+    private Vector3f sunDirection;
 
       public WaterManager(SimpleApplication app) {
         this.app = app;
     }
     
-    public void createWater(float waterHeight) {
+    public void createWater(float waterHeight, Vector3f sunDirection) {
         fpp = new FilterPostProcessor(app.getAssetManager());
-        water = new WaterFilter(app.getRootNode(), lightDir);
+        water = new WaterFilter(app.getRootNode(), sunDirection);
         water.setWaterHeight(waterHeight);
         fpp.addFilter(water);
         app.getViewPort().addProcessor(fpp);
@@ -58,6 +58,25 @@ public class WaterManager {
         return water;
     }
 
+    public void getLightDirection(AssetManager assetManager) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
+            JsonNode root = mapper.readTree(is);
+            for (JsonNode lightingNode : root.get("lighting")) {
+                JsonNode addLight = lightingNode.get("addlight");
+
+                double sunDirectionX = addLight.get("sunDirection").get("x").asDouble();
+                double sunDirectionY = addLight.get("sunDirection").get("y").asDouble();
+                double sunDirectionZ = addLight.get("sunDirection").get("z").asDouble();
+
+                sunDirection = new Vector3f((float) sunDirectionX, (float) sunDirectionY, (float) sunDirectionZ);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void loadWaterFromJson(AssetManager assetManager) {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -76,9 +95,11 @@ public class WaterManager {
                 int deepG = addWater.get("deepWaterColor").get("g").asInt();
                 int deepB = addWater.get("deepWaterColor").get("b").asInt();
                 int deepA = addWater.get("deepWaterColor").get("a").asInt();
+
+                getLightDirection(assetManager);
                 boolean foam = addWater.get("foam").asBoolean();
 
-                createWater((float) waterHeight);
+                createWater((float) waterHeight, sunDirection);
                 setWaterTransparency((float) transparency);
                 setWaterColor(ColorRGBA.fromRGBA255(colorR, colorG, colorB, colorA), ColorRGBA.fromRGBA255(deepR, deepG, deepB, deepA));
                 Foam(foam);
