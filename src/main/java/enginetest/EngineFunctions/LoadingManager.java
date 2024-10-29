@@ -35,7 +35,7 @@ public class LoadingManager {
 
     public void loadGameFromJson() {
         if (isWindows()) {
-            loadingScreen = new LoadingScreen();
+            loadingScreen = new LoadingScreen(app);
         }
 
         if (isWindows()) {

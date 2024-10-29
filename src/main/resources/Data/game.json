@@ -1,4 +1,12 @@
 {
+    "gamedata": [
+        {
+            "gameinfo": {
+                "title": "Engine Demo",
+                "creator": "Evan"
+            }
+        }
+    ],
     "cubes": [
         {
             "addcube": {
@@ -136,26 +144,7 @@
             }
         }
     ],
-    "shapes": [
-        {
-            "addsphere": {
-                "radius": 100,
-                "position": {
-                    "x": 300,
-                    "y": 0.0,
-                    "z": 0.1
-                },
-                "rotation": {
-                    "x": 0.1,
-                    "y": 0.0,
-                    "z": 0.1
-                },
-                "texturePath": "Textures/concrete.png",
-                "tileX": 1,
-                "tileY": 1,
-                "objectId": 1
-            }
-        },
+    "pyramids": [
         {
             "addpyramid": {
                 "radius": 10,
@@ -168,6 +157,27 @@
                     "x": 0,
                     "y": 0,
                     "z": 0
+                },
+                "texturePath": "Textures/concrete.png",
+                "tileX": 1,
+                "tileY": 1,
+                "objectId": 2
+            }
+        }
+    ],
+    "spheres": [
+        {
+            "addsphere": {
+                "radius": 100,
+                "position": {
+                    "x": 300,
+                    "y": 0.0,
+                    "z": 0.1
+                },
+                "rotation": {
+                    "x": 0.1,
+                    "y": 0.0,
+                    "z": 0.1
                 },
                 "texturePath": "Textures/concrete.png",
                 "tileX": 1,

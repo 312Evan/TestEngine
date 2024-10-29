@@ -400,7 +400,7 @@ public class ModelManager {
 
         try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
             JsonNode root = mapper.readTree(is);
-            for (JsonNode shapeNode : root.get("shapes")) {
+            for (JsonNode shapeNode : root.get("spheres")) {
                 JsonNode addSphere = shapeNode.get("addsphere");
 
                 float radius = (float) addSphere.get("radius").asDouble();
@@ -425,7 +425,7 @@ public class ModelManager {
 
         try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
             JsonNode root = mapper.readTree(is);
-            for (JsonNode shapeNode : root.get("shapes")) {
+            for (JsonNode shapeNode : root.get("pyramids")) {
                 JsonNode addPyramid = shapeNode.get("addpyramid");
 
                 float radius = (float) addPyramid.get("radius").asDouble();
