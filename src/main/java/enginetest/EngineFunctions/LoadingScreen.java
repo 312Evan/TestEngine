@@ -23,7 +23,6 @@ public class LoadingScreen extends JFrame {
     String title;
     String creator;
 
-    // Array of image URLs
     private String[] imageUrls = { "https://cdn.pixabay.com/photo/2022/09/21/17/02/blue-background-7470781_640.jpg" };
 
     public LoadingScreen(SimpleApplication app) {
@@ -32,7 +31,6 @@ public class LoadingScreen extends JFrame {
             int randomIndex = random.nextInt(imageUrls.length);
             URL imageUrl = new URL(imageUrls[randomIndex]);
 
-            // Load the selected image
             backgroundImage = ImageIO.read(imageUrl);
 
             if (backgroundImage != null) {

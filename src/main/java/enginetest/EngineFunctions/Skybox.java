@@ -33,13 +33,13 @@ public class Skybox {
 
     public void SetDefaultSkybox() {
         removeCurrentSkybox();
-        currentSkybox = SkyFactory.createSky(app.getAssetManager(), "Textures/BrightSky.dds", EnvMapType.CubeMap);
+        currentSkybox = SkyFactory.createSky(app.getAssetManager(), "Textures/Skyboxes/BrightSky.dds", EnvMapType.CubeMap);
         app.getRootNode().attachChild(currentSkybox);
     }
 
     public void SetDefaultSkybox2() {
         removeCurrentSkybox();
-        currentSkybox = SkyFactory.createSky(app.getAssetManager(), "Textures/BlueSky.dds", EnvMapType.CubeMap);
+        currentSkybox = SkyFactory.createSky(app.getAssetManager(), "Textures/Skyboxes/BlueSky.dds", EnvMapType.CubeMap);
         app.getRootNode().attachChild(currentSkybox);
     }
 

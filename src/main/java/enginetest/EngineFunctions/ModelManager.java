@@ -9,6 +9,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
+import com.jme3.bullet.collision.shapes.MeshCollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -211,7 +212,7 @@ public class ModelManager {
         model.setMaterial(mat);
 
         app.getRootNode().attachChild(model);
-        addPhysics(model, new BoxCollisionShape(scale), 0);
+        addPhysics(model, new MeshCollisionShape(), 0);
     }
 
     public void RemoveShape(int objectId) {
@@ -245,21 +246,18 @@ public class ModelManager {
     }
 
     public void createThirdPersonController(Vector3f position) {
-        // Load the player model
         playerModel = app.getAssetManager().loadModel("Models/defaultCharacter.obj");
         playerModel.setLocalTranslation(position);
         playerModel.setShadowMode(ShadowMode.CastAndReceive);
         playerModel.setLocalScale(3.5f);
 
         Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
-        Texture texture = app.getAssetManager().loadTexture("Textures/defaultCharacter.png");
+        Texture texture = app.getAssetManager().loadTexture("Textures/ModelTextures/defaultCharacter.png");
         mat.setTexture("DiffuseMap", texture);
         playerModel.setMaterial(mat);
 
-        // Add the player model to the root node
         app.getRootNode().attachChild(playerModel);
 
-        // Create a collision shape for the player
         CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 3.5f, 1);
         player = new CharacterControl(capsuleShape, 0.05f);
         player.setJumpSpeed(20);
@@ -268,16 +266,12 @@ public class ModelManager {
         player.setPhysicsLocation(position);
         playerModel.addControl(player);
 
-        // Get the BulletAppState from the app (you need to have it initialized
-        // somewhere)
         BulletAppState bulletAppState = app.getStateManager().getState(BulletAppState.class);
         bulletAppState.getPhysicsSpace().add(player);
 
-        // Setup the camera
         ChaseCamera chaseCam = new ChaseCamera(app.getCamera(), playerModel, app.getInputManager());
         chaseCam.setDefaultDistance(12);
 
-        // Setup action key mappings
         app.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
         app.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
         app.getInputManager().addMapping("Up", new KeyTrigger(KeyInput.KEY_W));
