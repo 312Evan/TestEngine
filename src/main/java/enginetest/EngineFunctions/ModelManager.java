@@ -444,4 +444,29 @@ public class ModelManager {
             e.printStackTrace();
         }
     }
+
+    public void loadConesFromJson(AssetManager assetManager) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
+            JsonNode root = mapper.readTree(is);
+            for (JsonNode shapeNode : root.get("cones")) {
+                JsonNode addCone = shapeNode.get("addcone");
+
+                float radius = (float) addCone.get("radius").asDouble();
+                Vector3f position = new Vector3f((float) addCone.get("position").get("x").asDouble(), (float) addCone.get("position").get("y").asDouble(),
+                        (float) addCone.get("position").get("z").asDouble());
+                Vector3f rotation = new Vector3f((float) addCone.get("rotation").get("x").asDouble(), (float) addCone.get("rotation").get("y").asDouble(),
+                        (float) addCone.get("rotation").get("z").asDouble());
+                String texturePath = addCone.get("texturePath").asText();
+                int tileX = addCone.get("tileX").asInt();
+                int tileY = addCone.get("tileY").asInt();
+                int objectId = addCone.get("objectId").asInt();
+
+                CreateCone(radius, position, rotation, texturePath, tileX, tileY, objectId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

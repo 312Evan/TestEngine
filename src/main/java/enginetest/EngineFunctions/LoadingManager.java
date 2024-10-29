@@ -45,6 +45,7 @@ public class LoadingManager {
         modelManager.loadCubesFromJson(app.getAssetManager());
         modelManager.loadSpheresFromJson(app.getAssetManager());
         modelManager.loadPyramidsFromJson(app.getAssetManager());
+        modelManager.loadConesFromJson(app.getAssetManager());
         if (isWindows()) {
             loadingScreen.setProgress(20);
         }
