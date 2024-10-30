@@ -39,14 +39,14 @@ public class EngineTest extends SimpleApplication {
         //Load Game From Json
         loadingManager.loadGameFromJson();
 
-        modelManager.createThirdPersonController(new Vector3f(0,0,0));
+        // modelManager.createThirdPersonController(new Vector3f(0,0,0));
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-        if (modelManager != null) {
-            modelManager.update(tpf);
-        }
+        // if (modelManager != null) {
+        //     modelManager.update(tpf);
+        // }
     }
 
     @Override

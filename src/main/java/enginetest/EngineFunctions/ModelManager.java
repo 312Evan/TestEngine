@@ -9,7 +9,6 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
-import com.jme3.bullet.collision.shapes.MeshCollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -212,7 +211,7 @@ public class ModelManager {
         model.setMaterial(mat);
 
         app.getRootNode().attachChild(model);
-        addPhysics(model, new MeshCollisionShape(), 0);
+        // addPhysics(model, new MeshCollisionShape(), 0);
     }
 
     public void RemoveShape(int objectId) {
