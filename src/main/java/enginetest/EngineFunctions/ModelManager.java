@@ -9,6 +9,8 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
+import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
+import com.jme3.bullet.collision.shapes.MeshCollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -22,6 +24,7 @@ import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Dome;
@@ -39,7 +42,7 @@ public class ModelManager {
         this.app = app;
     }
 
-    public void CreateUnshadedCube(Vector3f size, Vector3f position, Vector3f rotation, ColorRGBA color, int objectId) {
+    public void CreateUnshadedCube(Vector3f size, Vector3f position, Vector3f rotation, ColorRGBA color, int mass, int objectId) {
         Box b = new Box(size.x, size.y, size.z);
         Geometry geom = new Geometry("Box", b);
         geom.rotate(rotation.x, rotation.y, rotation.z);
@@ -52,11 +55,10 @@ public class ModelManager {
         geom.setShadowMode(ShadowMode.CastAndReceive);
 
         app.getRootNode().attachChild(geom);
-        addPhysics(geom, new BoxCollisionShape(size), 0);
+        addPhysics(geom, new BoxCollisionShape(size), mass);
     }
 
-    public void CreateShadedSolidCube(Vector3f size, Vector3f position, Vector3f rotation, ColorRGBA ambientColor, ColorRGBA diffuseColor, ColorRGBA specularColor, float shininess,
-            int objectId) {
+    public void CreateShadedSolidCube(Vector3f size, Vector3f position, Vector3f rotation, ColorRGBA ambientColor, ColorRGBA diffuseColor, ColorRGBA specularColor, float shininess, int mass, int objectId) {
         Box b = new Box(size.x, size.y, size.z);
         Geometry geom = new Geometry("Box", b);
         geom.rotate(rotation.x, rotation.y, rotation.z);
@@ -72,10 +74,10 @@ public class ModelManager {
         geom.setShadowMode(ShadowMode.CastAndReceive);
 
         app.getRootNode().attachChild(geom);
-        addPhysics(geom, new BoxCollisionShape(size), 0);
+        addPhysics(geom, new BoxCollisionShape(size), mass);
     }
 
-    public void CreateTexturedCube(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int objectId) {
+    public void CreateTexturedCube(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int mass, int objectId) {
         Box b = new Box(size.x, size.y, size.z);
         Geometry geom = new Geometry("Box", b);
         b.scaleTextureCoordinates(new Vector2f(tileX, tileY));
@@ -91,10 +93,10 @@ public class ModelManager {
         geom.setShadowMode(ShadowMode.CastAndReceive);
 
         app.getRootNode().attachChild(geom);
-        addPhysics(geom, new BoxCollisionShape(size), 0);
+        addPhysics(geom, new BoxCollisionShape(size), mass);
     }
 
-    public void CreateSphere(float radius, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int objectId) {
+    public void CreateSphere(float radius, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int mass, int objectId) {
         Sphere sphere = new Sphere(32, 32, radius, false, false);
         Geometry geom = new Geometry("Sphere", sphere);
         geom.setLocalTranslation(position);
@@ -111,11 +113,10 @@ public class ModelManager {
         geom.setShadowMode(ShadowMode.CastAndReceive);
 
         app.getRootNode().attachChild(geom);
-        addPhysics(geom, new SphereCollisionShape(radius), 0);
+        addPhysics(geom, new SphereCollisionShape(radius), mass);
     }
 
-    public void CreateTexturedCubeWithNormal(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, String normalMapPath, float tileX, float tileY,
-            int objectId) {
+    public void CreateTexturedCubeWithNormal(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, String normalMapPath, float tileX, float tileY, int mass, int objectId) {
         Box b = new Box(size.x, size.y, size.z);
         Geometry geom = new Geometry("Box", b);
         b.scaleTextureCoordinates(new Vector2f(tileX, tileY));
@@ -137,10 +138,10 @@ public class ModelManager {
         geom.setShadowMode(ShadowMode.CastAndReceive);
 
         app.getRootNode().attachChild(geom);
-        addPhysics(geom, new BoxCollisionShape(size), 0);
+        addPhysics(geom, new BoxCollisionShape(size), mass);
     }
 
-    public void CreatePyramid(float radius, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int objectId) {
+    public void CreatePyramid(float radius, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int mass, int objectId) {
         Dome mesh = new Dome(position, 2, 4, radius, false);
         Geometry geom = new Geometry("Pyramid", mesh);
         mesh.scaleTextureCoordinates(new Vector2f(tileX, tileY));
@@ -156,10 +157,10 @@ public class ModelManager {
         geom.setShadowMode(ShadowMode.CastAndReceive);
 
         app.getRootNode().attachChild(geom);
-        addPhysics(geom, new SphereCollisionShape(radius), 0);
+        addPhysics(geom, new SphereCollisionShape(radius), mass);
     }
 
-    public void CreateCone(float radius, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int objectId) {
+    public void CreateCone(float radius, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int mass, int objectId) {
         Dome mesh = new Dome(position, 2, 50, radius, false);
         Geometry geom = new Geometry("Pyramid", mesh);
         mesh.scaleTextureCoordinates(new Vector2f(tileX, tileY));
@@ -175,7 +176,7 @@ public class ModelManager {
         geom.setShadowMode(ShadowMode.CastAndReceive);
 
         app.getRootNode().attachChild(geom);
-        addPhysics(geom, new SphereCollisionShape(radius), 0);
+        addPhysics(geom, new SphereCollisionShape(radius), mass);
     }
 
     public void CreateDome(int planes, int radialSamples, float radius, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int objectId) {
@@ -197,7 +198,7 @@ public class ModelManager {
         addPhysics(geom, new SphereCollisionShape(radius), 0);
     }
 
-    public void createModel(String modelPath, String texturePath, Vector3f position, Vector3f scale, Vector3f rotation, int objectId) {
+    public void createModel(String modelPath, String texturePath, Vector3f position, Vector3f scale, Vector3f rotation, int mass, int objectId) {
         Spatial model = app.getAssetManager().loadModel(modelPath);
         model.setLocalTranslation(position);
         model.setShadowMode(ShadowMode.CastAndReceive);
@@ -211,7 +212,30 @@ public class ModelManager {
         model.setMaterial(mat);
 
         app.getRootNode().attachChild(model);
-        // addPhysics(model, new MeshCollisionShape(), 0);
+
+        if (model instanceof Geometry) {
+            addScaledPhysics(model, scale, mass);
+        } else if (model instanceof Node) {
+            for (Spatial child : ((Node) model).getChildren()) {
+                if (child instanceof Geometry) {
+                    addScaledPhysics(child, scale, mass);
+                }
+            }
+        }
+    }
+
+    private void addScaledPhysics(Spatial spatial, Vector3f scale, float mass) {
+        MeshCollisionShape meshShape = new MeshCollisionShape(((Geometry) spatial).getMesh());
+
+        CompoundCollisionShape compoundShape = new CompoundCollisionShape();
+        compoundShape.addChildShape(meshShape, Vector3f.ZERO);
+        compoundShape.setScale(scale);
+
+        RigidBodyControl control = new RigidBodyControl(compoundShape, mass);
+        spatial.addControl(control);
+
+        BulletAppState bulletAppState = app.getStateManager().getState(BulletAppState.class);
+        bulletAppState.getPhysicsSpace().add(control);
     }
 
     public void RemoveShape(int objectId) {
@@ -228,9 +252,10 @@ public class ModelManager {
 
     public void removeModel(int objectId) {
         for (Spatial child : app.getRootNode().getChildren()) {
-            if (child.getUserData("objectId") != null && child.getUserData("objectId").equals(objectId)) {
+            Integer storedId = child.getUserData("objectId");
+            if (storedId != null && storedId.equals(objectId)) {
                 child.removeFromParent();
-                app.getStateManager().getState(BulletAppState.class).getPhysicsSpace().remove(child);
+                app.getStateManager().getState(BulletAppState.class).getPhysicsSpace().remove(child.getControl(RigidBodyControl.class));
                 break;
             }
         }
@@ -330,12 +355,13 @@ public class ModelManager {
                         (float) addCube.get("position").get("z").asDouble());
                 Vector3f rotation = new Vector3f((float) addCube.get("rotation").get("x").asDouble(), (float) addCube.get("rotation").get("y").asDouble(),
                         (float) addCube.get("rotation").get("z").asDouble());
+                int mass = addCube.get("mass").asInt();
                 int objectId = addCube.get("objectId").asInt();
 
                 if (addCube.has("color")) {
                     ColorRGBA color = new ColorRGBA((float) addCube.get("color").get("r").asDouble(), (float) addCube.get("color").get("g").asDouble(),
                             (float) addCube.get("color").get("b").asDouble(), (float) addCube.get("color").get("a").asDouble());
-                    CreateUnshadedCube(size, position, rotation, color, objectId);
+                    CreateUnshadedCube(size, position, rotation, color, mass, objectId);
                 } else if (addCube.has("ambientColor") && addCube.has("diffuseColor") && addCube.has("specularColor")) {
                     ColorRGBA ambientColor = new ColorRGBA((float) addCube.get("ambientColor").get("r").asDouble(), (float) addCube.get("ambientColor").get("g").asDouble(),
                             (float) addCube.get("ambientColor").get("b").asDouble(), (float) addCube.get("ambientColor").get("a").asDouble());
@@ -344,18 +370,18 @@ public class ModelManager {
                     ColorRGBA specularColor = new ColorRGBA((float) addCube.get("specularColor").get("r").asDouble(), (float) addCube.get("specularColor").get("g").asDouble(),
                             (float) addCube.get("specularColor").get("b").asDouble(), (float) addCube.get("specularColor").get("a").asDouble());
                     float shininess = (float) addCube.get("shininess").asDouble();
-                    CreateShadedSolidCube(size, position, rotation, ambientColor, diffuseColor, specularColor, shininess, objectId);
+                    CreateShadedSolidCube(size, position, rotation, ambientColor, diffuseColor, specularColor, shininess, mass, objectId);
                 } else if (addCube.has("texturePath") && addCube.has("normalMapPath")) {
                     String texturePath = addCube.get("texturePath").asText();
                     String normalMapPath = addCube.get("normalMapPath").asText();
                     float tileX = (float) addCube.get("tileX").asDouble();
                     float tileY = (float) addCube.get("tileY").asDouble();
-                    CreateTexturedCubeWithNormal(size, position, rotation, texturePath, normalMapPath, tileX, tileY, objectId);
+                    CreateTexturedCubeWithNormal(size, position, rotation, texturePath, normalMapPath, tileX, tileY, mass, objectId);
                 } else if (addCube.has("texturePath")) {
                     String texturePath = addCube.get("texturePath").asText();
                     float tileX = (float) addCube.get("tileX").asDouble();
                     float tileY = (float) addCube.get("tileY").asDouble();
-                    CreateTexturedCube(size, position, rotation, texturePath, tileX, tileY, objectId);
+                    CreateTexturedCube(size, position, rotation, texturePath, tileX, tileY, mass, objectId);
                 }
             }
         } catch (Exception e) {
@@ -379,9 +405,10 @@ public class ModelManager {
                         (float) addModel.get("rotation").get("z").asDouble());
                 String texturePath = addModel.get("texturePath").asText();
                 String modelPath = addModel.get("modelPath").asText();
+                int mass = addModel.get("mass").asInt();
                 int objectId = addModel.get("objectId").asInt();
 
-                createModel(modelPath, texturePath, position, size, rotation, objectId);
+                createModel(modelPath, texturePath, position, size, rotation, mass, objectId);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -404,15 +431,16 @@ public class ModelManager {
                 String texturePath = addSphere.get("texturePath").asText();
                 int tileX = addSphere.get("tileX").asInt();
                 int tileY = addSphere.get("tileY").asInt();
+                int mass = addSphere.get("mass").asInt();
                 int objectId = addSphere.get("objectId").asInt();
 
-                CreateSphere(radius, position, rotation, texturePath, tileX, tileY, objectId);
+                CreateSphere(radius, position, rotation, texturePath, tileX, tileY, mass, objectId);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void loadPyramidsFromJson(AssetManager assetManager) {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -429,9 +457,10 @@ public class ModelManager {
                 String texturePath = addPyramid.get("texturePath").asText();
                 int tileX = addPyramid.get("tileX").asInt();
                 int tileY = addPyramid.get("tileY").asInt();
+                int mass = addPyramid.get("mass").asInt();
                 int objectId = addPyramid.get("objectId").asInt();
 
-                CreatePyramid(radius, position, rotation, texturePath, tileX, tileY, objectId);
+                CreatePyramid(radius, position, rotation, texturePath, tileX, tileY, mass, objectId);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -454,9 +483,10 @@ public class ModelManager {
                 String texturePath = addCone.get("texturePath").asText();
                 int tileX = addCone.get("tileX").asInt();
                 int tileY = addCone.get("tileY").asInt();
+                int mass = addCone.get("mass").asInt();
                 int objectId = addCone.get("objectId").asInt();
 
-                CreateCone(radius, position, rotation, texturePath, tileX, tileY, objectId);
+                CreateCone(radius, position, rotation, texturePath, tileX, tileY, mass, objectId);
             }
         } catch (Exception e) {
             e.printStackTrace();
