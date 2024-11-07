@@ -10,6 +10,7 @@ public class LoadingManager {
     PostProcessing postProcessing;
     WaterManager waterManager;
     private LoadingScreen loadingScreen;
+    UiManager uiManager;
 
     private static String OS = null;
 
@@ -31,6 +32,7 @@ public class LoadingManager {
         this.skybox = new Skybox(app);
         this.postProcessing = new PostProcessing(app);
         this.waterManager = new WaterManager(app);
+        this.uiManager = new UiManager(app);
     }
 
     public void loadGameFromJson() {
@@ -72,6 +74,8 @@ public class LoadingManager {
         if (isWindows()) {
             loadingScreen.setProgress(100);
         }
+
+        uiManager.loadTextFromJson(app.getAssetManager());
 
         if (isWindows()) {
             loadingScreen.close();

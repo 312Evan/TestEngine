@@ -29,9 +29,9 @@ public class EngineTest extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+
         cam.setFrustumFar(3000);
 
-        // Initialize physics
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         flyCam.setMoveSpeed(100);
@@ -39,14 +39,14 @@ public class EngineTest extends SimpleApplication {
         //Load Game From Json
         loadingManager.loadGameFromJson();
 
-        // modelManager.createThirdPersonController(new Vector3f(0,0,0));
+        modelManager.createThirdPersonController(new Vector3f(0,10,0));
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-        // if (modelManager != null) {
-        //     modelManager.update(tpf);
-        // }
+        if (modelManager != null) {
+            modelManager.update(tpf);
+        }
     }
 
     @Override
