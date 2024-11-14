@@ -11,9 +11,9 @@
         {
             "addcube": {
                 "size": {
-                    "x": 200,
+                    "x": 1400,
                     "y": 200,
-                    "z": 200
+                    "z": 1400
                 },
                 "position": {
                     "x": 0,
@@ -172,28 +172,7 @@
             }
         }
     ],
-    "spheres": [
-        {
-            "addsphere": {
-                "radius": 100,
-                "position": {
-                    "x": 100,
-                    "y": 150,
-                    "z": 0.1
-                },
-                "rotation": {
-                    "x": 0.1,
-                    "y": 0.0,
-                    "z": 0.1
-                },
-                "texturePath": "Textures/Textures/concrete.png",
-                "tileX": 1,
-                "tileY": 1,
-                "mass": 0,
-                "objectId": 1
-            }
-        }
-    ],
+    "spheres": [],
     "cones": [
         {
             "addcone": {
@@ -252,6 +231,5 @@
             }
         }
     ],
-    "text": [
-    ]
+    "text": []
 }
