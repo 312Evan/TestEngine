@@ -25,7 +25,7 @@
                     "y": 0,
                     "z": 0
                 },
-                "texturePath": "Textures/Textures/sand.jpg",
+                "texturePath": "sand",
                 "tileX": 70,
                 "tileY": 70,
                 "mass": 0,
@@ -51,7 +51,7 @@
                     "y": 1.5,
                     "z": 0.0
                 },
-                "texturePath": "Textures/ModelTextures/boulder.jpg",
+                "texturePath": "rock",
                 "modelPath": "Models/boulder.obj",
                 "mass": 0,
                 "objectId": 1
@@ -74,7 +74,7 @@
                     "y": 0.0,
                     "z": 0.0
                 },
-                "texturePath": "Textures/ModelTextures/stone.png",
+                "texturePath": "rock",
                 "modelPath": "Models/stone.obj",
                 "mass": 0,
                 "objectId": 1
@@ -97,7 +97,7 @@
                     "y": 0.0,
                     "z": 0.0
                 },
-                "texturePath": "Textures/ModelTextures/stone.png",
+                "texturePath": "rock",
                 "modelPath": "Models/stone.obj",
                 "mass": 0,
                 "objectId": 1
@@ -120,7 +120,7 @@
                     "y": 0.0,
                     "z": 0.0
                 },
-                "texturePath": "Textures/ModelTextures/tree.jpg",
+                "texturePath": "wood",
                 "modelPath": "Models/tree.obj",
                 "mass": 0,
                 "objectId": 1
@@ -143,58 +143,16 @@
                     "y": 0.0,
                     "z": 0.1
                 },
-                "texturePath": "Textures/ModelTextures/tree.jpg",
+                "texturePath": "wood",
                 "modelPath": "Models/tree.obj",
                 "mass": 0,
                 "objectId": 2
             }
         }
     ],
-    "pyramids": [
-        {
-            "addpyramid": {
-                "radius": 10,
-                "position": {
-                    "x": 10,
-                    "y": 10,
-                    "z": 10
-                },
-                "rotation": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                },
-                "texturePath": "Textures/Textures/concrete.png",
-                "tileX": 1,
-                "tileY": 1,
-                "mass": 0,
-                "objectId": 2
-            }
-        }
-    ],
+    "pyramids": [],
     "spheres": [],
-    "cones": [
-        {
-            "addcone": {
-                "radius": 100,
-                "position": {
-                    "x": -300,
-                    "y": 0.0,
-                    "z": 0.1
-                },
-                "rotation": {
-                    "x": 0.1,
-                    "y": 0.0,
-                    "z": 0.1
-                },
-                "texturePath": "Textures/Textures/concrete.png",
-                "tileX": 1,
-                "tileY": 1,
-                "mass": 0,
-                "objectId": 1
-            }
-        }
-    ],
+    "cones": [],
     "water": [
         {
             "addocean": {
