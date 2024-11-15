@@ -193,7 +193,7 @@ public class ModelManager {
         // mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/rockNormal.jpg"));
         // model.setMaterial(mat);
 
-        addPresetTexture("concrete", model);
+        addPresetTexture("forestground", model);
 
         app.getRootNode().attachChild(model);
 
@@ -590,6 +590,18 @@ public class ModelManager {
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
             mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/concreteNormal.jpg"));
+            model.setMaterial(mat);
+        }
+        else if (textureName == "forestground") {
+            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture texture = app.getAssetManager().loadTexture("Textures/Textures/forestground.jpg");
+            mat.setTexture("DiffuseMap", texture);
+            mat.setColor("Specular", ColorRGBA.Brown);
+            mat.setColor("Diffuse", ColorRGBA.White);
+            mat.setFloat("Shininess", 15f);
+            mat.setBoolean("UseMaterialColors", true);
+            TangentBinormalGenerator.generate(model);
+            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/forestgroundNormal.jpg"));
             model.setMaterial(mat);
         }
     }
