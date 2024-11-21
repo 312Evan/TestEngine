@@ -11,9 +11,9 @@
         {
             "addcube": {
                 "size": {
-                    "x": 1400,
-                    "y": 200,
-                    "z": 1400
+                    "x": 1000,
+                    "y": 10,
+                    "z": 1000
                 },
                 "position": {
                     "x": 0,
@@ -25,154 +25,191 @@
                     "y": 0,
                     "z": 0
                 },
-                "texturePath": "sand",
-                "tileX": 70,
-                "tileY": 70,
+                "texturePath": "asphalt",
+                "tileX": 1,
+                "tileY": 1,
                 "mass": 0,
                 "objectId": 1
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 80,
+                    "y": 200,
+                    "z": 80
+                },
+                "position": {
+                    "x": -400,
+                    "y": -200,
+                    "z": -400
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "grass",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 0,
+                "objectId": 2
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 150,
+                    "y": 400,
+                    "z": 150
+                },
+                "position": {
+                    "x": 200,
+                    "y": -100,
+                    "z": -300
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 15,
+                    "z": 0
+                },
+                "texturePath": "wood",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 0,
+                "objectId": 3
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 100,
+                    "y": 300,
+                    "z": 100
+                },
+                "position": {
+                    "x": -100,
+                    "y": -150,
+                    "z": 200
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 30,
+                    "z": 0
+                },
+                "texturePath": "ice",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 0,
+                "objectId": 4
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 200,
+                    "y": 500,
+                    "z": 200
+                },
+                "position": {
+                    "x": 400,
+                    "y": 0,
+                    "z": 400
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 45,
+                    "z": 0
+                },
+                "texturePath": "concrete",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 0,
+                "objectId": 5
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 60,
+                    "y": 150,
+                    "z": 60
+                },
+                "position": {
+                    "x": -300,
+                    "y": -225,
+                    "z": 300
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "brick",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 0,
+                "objectId": 6
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 120,
+                    "y": 350,
+                    "z": 120
+                },
+                "position": {
+                    "x": 100,
+                    "y": -125,
+                    "z": -100
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": -30,
+                    "z": 0
+                },
+                "texturePath": "sand",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 0,
+                "objectId": 7
             }
         }
     ],
     "models": [
+
+    ],
+    "pyramids": [
+
+    ],
+    "spheres": [
         {
-            "addmodel": {
-                "size": {
-                    "x": 40.0,
-                    "y": 40.0,
-                    "z": 40.0
-                },
-                "position": {
-                    "x": -24,
-                    "y": -5,
-                    "z": 50
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 1.5,
-                    "z": 0.0
-                },
-                "texturePath": "rock",
-                "modelPath": "Models/boulder.obj",
-                "mass": 0,
-                "objectId": 1
-            }
-        },
-        {
-            "addmodel": {
-                "size": {
-                    "x": 40,
-                    "y": 40,
-                    "z": 40
-                },
+            "addsphere": {
+                "radius": 10,
                 "position": {
                     "x": 0,
-                    "y": -3,
+                    "y": 150,
                     "z": 0
                 },
                 "rotation": {
-                    "x": 0.0,
+                    "x": 0,
                     "y": 0.0,
-                    "z": 0.0
+                    "z": 0
                 },
-                "texturePath": "rock",
-                "modelPath": "Models/stone.obj",
-                "mass": 0,
+                "texturePath": "Textures/Colors/red.jpg",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 10,
                 "objectId": 1
-            }
-        },
-        {
-            "addmodel": {
-                "size": {
-                    "x": 40,
-                    "y": 40,
-                    "z": 40
-                },
-                "position": {
-                    "x": 24,
-                    "y": -3,
-                    "z": 100
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "texturePath": "rock",
-                "modelPath": "Models/stone.obj",
-                "mass": 0,
-                "objectId": 1
-            }
-        },
-        {
-            "addmodel": {
-                "size": {
-                    "x": 30,
-                    "y": 30,
-                    "z": 30
-                },
-                "position": {
-                    "x": -12,
-                    "y": 59,
-                    "z": 30
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "texturePath": "wood",
-                "modelPath": "Models/tree.obj",
-                "mass": 0,
-                "objectId": 1
-            }
-        },
-        {
-            "addmodel": {
-                "size": {
-                    "x": 30,
-                    "y": 30,
-                    "z": 30
-                },
-                "position": {
-                    "x": -30,
-                    "y": 55,
-                    "z": 60
-                },
-                "rotation": {
-                    "x": 0.1,
-                    "y": 0.0,
-                    "z": 0.1
-                },
-                "texturePath": "wood",
-                "modelPath": "Models/tree.obj",
-                "mass": 0,
-                "objectId": 2
             }
         }
     ],
-    "pyramids": [],
-    "spheres": [],
-    "cones": [],
+    "cones": [
+
+    ],
     "water": [
-        {
-            "addocean": {
-                "foam": true,
-                "waterHeight": -1.5,
-                "waterTransparency": 0.1,
-                "waterColor": {
-                    "r": 56,
-                    "g": 107,
-                    "b": 79,
-                    "a": 1
-                },
-                "deepWaterColor": {
-                    "r": 56,
-                    "g": 107,
-                    "b": 79,
-                    "a": 1
-                }
-            }
-        }
+
     ],
     "lighting": [
         {
@@ -183,11 +220,10 @@
                     "z": -100
                 },
                 "hdrSkybox": true,
-                "skyboxPath": "Textures/Skyboxes/sunset.hdr",
+                "skyboxPath": "Textures/Skyboxes/clearsky.hdr",
                 "enableBloom": true,
                 "bloomIntensity": 0.1
             }
         }
-    ],
-    "text": []
+    ]
 }

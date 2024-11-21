@@ -32,10 +32,10 @@ public class LightingManager {
 
     public void addSun(Vector3f sunDirection) {
         AmbientLight ambientLight = new AmbientLight();
-        ambientLight.setColor(ColorRGBA.White.mult(1.5f));
+        ambientLight.setColor(ColorRGBA.White.mult(0.5f));
         app.getRootNode().addLight(ambientLight);
 
-        sun.setColor(new ColorRGBA(1.0f, 0.95f, 0.85f, 1.0f));
+        sun.setColor(new ColorRGBA(1.0f, 0.95f, 0.85f, 1.0f).mult(2f));
         sun.setDirection(sunDirection.normalizeLocal());
         app.getRootNode().addLight(sun);
 
@@ -54,12 +54,10 @@ public class LightingManager {
         dlsf.setEdgesThickness(1);
         dlsf.setShadowIntensity(0.7f);
         dlsf.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
-        dlsf.setEnabled(false);
+        dlsf.setEnabled(true);
 
         FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
         fpp.addFilter(dlsf);
-
-        app.getViewPort().addProcessor(fpp);
         
         SSAOFilter ssaoFilter = new SSAOFilter(5.1f, 4.5f, 0.2f, 0.1f);
         fpp.addFilter(ssaoFilter);

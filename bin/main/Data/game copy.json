@@ -26,8 +26,8 @@
                     "z": 0
                 },
                 "texturePath": "rock",
-                "tileX": 10,
-                "tileY": 10,
+                "tileX": 100,
+                "tileY": 100,
                 "mass": 0,
                 "objectId": 1
             }

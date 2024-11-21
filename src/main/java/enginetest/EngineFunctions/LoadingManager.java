@@ -54,6 +54,10 @@ public class LoadingManager {
 
         modelManager.loadModelsFromJson(app.getAssetManager());
         if (isWindows()) {
+            loadingScreen.setProgress(32);
+        }
+        modelManager.loadCustomModelsFromJson(app.getAssetManager());
+        if (isWindows()) {
             loadingScreen.setProgress(64);
         }
 

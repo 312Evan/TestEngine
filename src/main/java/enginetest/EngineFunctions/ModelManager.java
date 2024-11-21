@@ -59,7 +59,8 @@ public class ModelManager {
         addPhysics(geom, new BoxCollisionShape(size), mass);
     }
 
-    public void CreateShadedSolidCube(Vector3f size, Vector3f position, Vector3f rotation, ColorRGBA ambientColor, ColorRGBA diffuseColor, ColorRGBA specularColor, float shininess, int mass, int objectId) {
+    public void CreateShadedSolidCube(Vector3f size, Vector3f position, Vector3f rotation, ColorRGBA ambientColor, ColorRGBA diffuseColor, ColorRGBA specularColor, float shininess,
+            int mass, int objectId) {
         Box b = new Box(size.x, size.y, size.z);
         Geometry geom = new Geometry("Box", b);
         geom.rotate(rotation.x, rotation.y, rotation.z);
@@ -78,25 +79,8 @@ public class ModelManager {
         addPhysics(geom, new BoxCollisionShape(size), mass);
     }
 
-    public void CreateTexturedCube(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int mass, int objectId) {
-        // Box b = new Box(size.x, size.y, size.z);
-        // Geometry geom = new Geometry("Box", b);
-        // b.scaleTextureCoordinates(new Vector2f(tileX, tileY));
-        // geom.rotate(rotation.x, rotation.y, rotation.z);
-        // geom.setLocalTranslation(position);
-        // geom.setUserData("objectId", objectId);
-
-        // Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
-        // Texture texture = app.getAssetManager().loadTexture(texturePath);
-        // texture.setWrap(Texture.WrapMode.Repeat);
-        // mat.setTexture("DiffuseMap", texture);
-        // geom.setMaterial(mat);
-        // geom.setShadowMode(ShadowMode.CastAndReceive);
-
-        // app.getRootNode().attachChild(geom);
-        // addPhysics(geom, new BoxCollisionShape(size), mass);'
-        
-        createModel("Models/cube.obj", texturePath, position, size, rotation, mass, objectId);
+    public void CreateTexturedCube(Vector3f size, Vector3f position, Vector3f rotation, String texturePath, int tileX, int tileY, int mass, int objectId) {
+        createModel("Models/cube.obj", texturePath, tileX, tileY, position, size, rotation, mass, objectId);
     }
 
     public void CreateSphere(float radius, Vector3f position, Vector3f rotation, String texturePath, float tileX, float tileY, int mass, int objectId) {
@@ -176,7 +160,7 @@ public class ModelManager {
         addPhysics(geom, new SphereCollisionShape(radius), 0);
     }
 
-    public void createModel(String modelPath, String texturePath, Vector3f position, Vector3f scale, Vector3f rotation, int mass, int objectId) {
+    public void createModel(String modelPath, String texturePath, int tileX, int tileY, Vector3f position, Vector3f scale, Vector3f rotation, int mass, int objectId) {
         Spatial model = app.getAssetManager().loadModel(modelPath);
         model.setLocalTranslation(position);
         model.setShadowMode(ShadowMode.CastAndReceive);
@@ -184,7 +168,19 @@ public class ModelManager {
         model.rotate(rotation.x, rotation.y, rotation.z);
         model.setUserData("objectId", objectId);
 
-        addPresetTexture(texturePath, model);
+        Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+
+        addPresetTexture(texturePath, mat, model);
+
+        if (model instanceof Geometry) {
+            ((Geometry) model).getMesh().scaleTextureCoordinates(new Vector2f(tileX, tileY));
+        } else if (model instanceof Node) {
+            for (Spatial child : ((Node) model).getChildren()) {
+                if (child instanceof Geometry) {
+                    ((Geometry) child).getMesh().scaleTextureCoordinates(new Vector2f(tileX, tileY));
+                }
+            }
+        }
 
         app.getRootNode().attachChild(model);
 
@@ -199,7 +195,7 @@ public class ModelManager {
         }
     }
 
-    public void createModelWithCustomTexture(String modelPath, String texturePath, Vector3f position, Vector3f scale, Vector3f rotation, int mass, int objectId) {
+    public void createModelWithCustomTexture(String modelPath, String texturePath, String normalPath, Vector3f position, Vector3f scale, Vector3f rotation, int mass, int objectId) {
         Spatial model = app.getAssetManager().loadModel(modelPath);
         model.setLocalTranslation(position);
         model.setShadowMode(ShadowMode.CastAndReceive);
@@ -213,9 +209,10 @@ public class ModelManager {
         mat.setColor("Specular", ColorRGBA.White);
         mat.setColor("Diffuse", ColorRGBA.White);
         mat.setFloat("Shininess", 0f);
+        mat.setColor("Ambient", ColorRGBA.White);
         mat.setBoolean("UseMaterialColors", true);
         TangentBinormalGenerator.generate(model);
-        mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/rockNormal.jpg"));
+        mat.setTexture("NormalMap", app.getAssetManager().loadTexture(normalPath));
         model.setMaterial(mat);
 
         app.getRootNode().attachChild(model);
@@ -393,7 +390,34 @@ public class ModelManager {
                 int mass = addModel.get("mass").asInt();
                 int objectId = addModel.get("objectId").asInt();
 
-                createModel(modelPath, texturePath, position, size, rotation, mass, objectId);
+                createModel(modelPath, texturePath, 1, 1, position, size, rotation, mass, objectId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadCustomModelsFromJson(AssetManager assetManager) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (InputStream is = assetManager.locateAsset(new com.jme3.asset.AssetKey<>("Data/game.json")).openStream()) {
+            JsonNode root = mapper.readTree(is);
+            for (JsonNode modelNode : root.get("custommodels")) {
+                JsonNode addModel = modelNode.get("addmodelwithcustomtexture");
+
+                Vector3f size = new Vector3f((float) addModel.get("size").get("x").asDouble(), (float) addModel.get("size").get("y").asDouble(),
+                        (float) addModel.get("size").get("z").asDouble());
+                Vector3f position = new Vector3f((float) addModel.get("position").get("x").asDouble(), (float) addModel.get("position").get("y").asDouble(),
+                        (float) addModel.get("position").get("z").asDouble());
+                Vector3f rotation = new Vector3f((float) addModel.get("rotation").get("x").asDouble(), (float) addModel.get("rotation").get("y").asDouble(),
+                        (float) addModel.get("rotation").get("z").asDouble());
+                String texturePath = addModel.get("texturePath").asText();
+                String normalPath = addModel.get("normalPath").asText();
+                String modelPath = addModel.get("modelPath").asText();
+                int mass = addModel.get("mass").asInt();
+                int objectId = addModel.get("objectId").asInt();
+
+                createModelWithCustomTexture(modelPath, texturePath, normalPath, position, size, rotation, mass, objectId);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -478,153 +502,153 @@ public class ModelManager {
         }
     }
 
-
-
-
-    //Material Presets
-    public void addPresetTexture(String textureName, Spatial model) {
-        if (textureName == "rock") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+    // Material Presets
+    public void addPresetTexture(String textureName, Material mat, Spatial model) {
+        if ("rock".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/rock.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
-            mat.setColor("Specular", ColorRGBA.White);
+            mat.setColor("Specular", ColorRGBA.DarkGray);
             mat.setColor("Diffuse", ColorRGBA.White);
-            mat.setFloat("Shininess", 0f);
+            mat.setColor("Ambient", ColorRGBA.White);
+            mat.setFloat("Shininess", 32f);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/rockNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "sand") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/rockNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("sand".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/sand.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.White);
             mat.setColor("Diffuse", ColorRGBA.White);
+            mat.setColor("Ambient", ColorRGBA.White);
             mat.setFloat("Shininess", 0f);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/sandNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "grass") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/sandNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("grass".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/grass.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.White);
             mat.setColor("Diffuse", ColorRGBA.White);
+            mat.setColor("Ambient", ColorRGBA.White);
             mat.setFloat("Shininess", 1f);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/grassNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "brick") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/grassNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("brick".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/brick.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.White);
             mat.setColor("Diffuse", ColorRGBA.White);
+            mat.setColor("Ambient", ColorRGBA.White);
             mat.setFloat("Shininess", 1f);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/brickNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "dirt") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/brickNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("dirt".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/dirt.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.Brown);
             mat.setColor("Diffuse", ColorRGBA.White);
+            mat.setColor("Ambient", ColorRGBA.White);
             mat.setFloat("Shininess", 15f);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/dirtNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "ice") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/dirtNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("ice".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/ice.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.White);
             mat.setColor("Diffuse", ColorRGBA.White);
             mat.setFloat("Shininess", 128f);
+            mat.setColor("Ambient", ColorRGBA.White);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/iceNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "concrete") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/iceNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("concrete".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/concrete.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.White);
             mat.setColor("Diffuse", ColorRGBA.White);
             mat.setFloat("Shininess", 1f);
+            mat.setColor("Ambient", ColorRGBA.White);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/concreteNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "forestground") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/concreteNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("forestground".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/forestground.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.Brown);
             mat.setColor("Diffuse", ColorRGBA.White);
             mat.setFloat("Shininess", 15f);
+            mat.setColor("Ambient", ColorRGBA.White);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/forestgroundNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "snow") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/forestgroundNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("snow".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/snow.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.fromRGBA255(171, 197, 255, 0));
             mat.setColor("Diffuse", ColorRGBA.White);
             mat.setFloat("Shininess", 128f);
+            mat.setColor("Ambient", ColorRGBA.White);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/snowNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "asphalt") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/snowNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("asphalt".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/asphalt.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.fromRGBA255(156, 156, 156, 0));
             mat.setColor("Diffuse", ColorRGBA.White);
             mat.setFloat("Shininess", 15f);
+            mat.setColor("Ambient", ColorRGBA.White);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/asphaltNormal.jpg"));
-            model.setMaterial(mat);
-        }
-        else if (textureName == "wood") {
-            Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/asphaltNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
+        } else if ("wood".equals(textureName)) {
             Texture texture = app.getAssetManager().loadTexture("Textures/Textures/wood.jpg");
             texture.setWrap(Texture.WrapMode.Repeat);
             mat.setTexture("DiffuseMap", texture);
             mat.setColor("Specular", ColorRGBA.Brown);
             mat.setColor("Diffuse", ColorRGBA.White);
-            mat.setFloat("Shininess", 1f);
+            mat.setColor("Ambient", ColorRGBA.White);
+            mat.setFloat("Shininess", 32f);
             mat.setBoolean("UseMaterialColors", true);
             TangentBinormalGenerator.generate(model);
-            mat.setTexture("NormalMap", app.getAssetManager().loadTexture("Textures/woodNormal.jpg"));
-            model.setMaterial(mat);
+            Texture normalMap = app.getAssetManager().loadTexture("Textures/woodNormal.jpg");
+            normalMap.setWrap(Texture.WrapMode.Repeat);
+            mat.setTexture("NormalMap", normalMap);
         }
+        model.setMaterial(mat);
     }
+
 }

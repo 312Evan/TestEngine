@@ -2,12 +2,9 @@ package enginetest;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.material.RenderState;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.system.AppSettings;
 import enginetest.EngineFunctions.*;
-
 
 public class EngineTest extends SimpleApplication {
     private BulletAppState bulletAppState;
@@ -33,21 +30,19 @@ public class EngineTest extends SimpleApplication {
 
         cam.setFrustumFar(3000);
 
-
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         flyCam.setMoveSpeed(100);
 
-        //Load Game From Json
+        // Load Game From Json
         loadingManager.loadGameFromJson();
-
         // modelManager.createThirdPersonController(new Vector3f(0,10,0));
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         // if (modelManager != null) {
-        //     modelManager.update(tpf);
+        // modelManager.update(tpf);
         // }
     }
 
