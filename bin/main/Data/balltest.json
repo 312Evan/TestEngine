@@ -1,0 +1,157 @@
+{
+    "gamedata": [
+        {
+            "gameinfo": {
+                "title": "Engine Demo",
+                "creator": "Evan"
+            }
+        }
+    ],
+    "cubes": [
+        {
+            "addcube": {
+                "size": {
+                    "x": 800,
+                    "y": 10,
+                    "z": 800
+                },
+                "position": {
+                    "x": 0,
+                    "y": -300,
+                    "z": 0
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "rock",
+                "tileX": 100,
+                "tileY": 100,
+                "mass": 0,
+                "objectId": 1
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 40,
+                    "y": 30,
+                    "z": 100
+                },
+                "position": {
+                    "x": 15,
+                    "y": -75,
+                    "z": 0
+                },
+                "rotation": {
+                    "x": 10,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "wood",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 0,
+                "objectId": 1
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 40,
+                    "y": 30,
+                    "z": 150
+                },
+                "position": {
+                    "x": 15,
+                    "y": -120,
+                    "z": 100
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "wood",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 0,
+                "objectId": 1
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 40,
+                    "y": 30,
+                    "z": 100
+                },
+                "position": {
+                    "x": 15,
+                    "y": -170,
+                    "z": 250
+                },
+                "rotation": {
+                    "x": 10,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "wood",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 0,
+                "objectId": 1
+            }
+        }
+    ],
+    "models": [
+
+    ],
+    "pyramids": [
+
+    ],
+    "spheres": [
+        {
+            "addsphere": {
+                "radius": 10,
+                "position": {
+                    "x": 0,
+                    "y": 150,
+                    "z": 0
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0.0,
+                    "z": 0
+                },
+                "texturePath": "Textures/Colors/red.jpg",
+                "tileX": 1,
+                "tileY": 1,
+                "mass": 10,
+                "objectId": 1
+            }
+        }
+    ],
+    "cones": [
+
+    ],
+    "water": [
+
+    ],
+    "lighting": [
+        {
+            "addlight": {
+                "sunDirection": {
+                    "x": -40,
+                    "y": -69,
+                    "z": -100
+                },
+                "hdrSkybox": true,
+                "skyboxPath": "Textures/Skyboxes/clearsky.hdr",
+                "enableBloom": true,
+                "bloomIntensity": 0.1
+            }
+        }
+    ]
+}

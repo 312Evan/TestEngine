@@ -30,7 +30,7 @@ public class LightingManager {
         this.app = app;
     }
 
-    public void addSun(Vector3f sunDirection) {
+    public void addSun(Vector3f sunDirection, int shadowDistance) {
         AmbientLight ambientLight = new AmbientLight();
         ambientLight.setColor(ColorRGBA.White.mult(0.5f));
         app.getRootNode().addLight(ambientLight);
@@ -45,7 +45,7 @@ public class LightingManager {
         dlsr.setShadowIntensity(0.7f);
         dlsr.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
         dlsr.setEnabledStabilization(true);
-        dlsr.setShadowZExtend(500);
+        dlsr.setShadowZExtend(shadowDistance);
         app.getViewPort().addProcessor(dlsr);
 
         dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), 4096, 4);
@@ -98,8 +98,9 @@ public class LightingManager {
                 double sunDirectionX = addLight.get("sunDirection").get("x").asDouble();
                 double sunDirectionY = addLight.get("sunDirection").get("y").asDouble();
                 double sunDirectionZ = addLight.get("sunDirection").get("z").asDouble();
+                int shadowDistance = addLight.get("shadowDistance").asInt();
 
-                addSun(new Vector3f((float) sunDirectionX, (float) sunDirectionY, (float) sunDirectionZ));
+                addSun(new Vector3f((float) sunDirectionX, (float) sunDirectionY, (float) sunDirectionZ), shadowDistance);
             }
         } catch (Exception e) {
             e.printStackTrace();

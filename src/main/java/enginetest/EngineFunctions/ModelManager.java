@@ -195,7 +195,8 @@ public class ModelManager {
         }
     }
 
-    public void createModelWithCustomTexture(String modelPath, String texturePath, String normalPath, Vector3f position, Vector3f scale, Vector3f rotation, int mass, int objectId) {
+    public void createModelWithCustomTexture(String modelPath, String texturePath, String normalPath, Vector3f position, Vector3f scale, Vector3f rotation, int mass,
+            int objectId) {
         Spatial model = app.getAssetManager().loadModel(modelPath);
         model.setLocalTranslation(position);
         model.setShadowMode(ShadowMode.CastAndReceive);
@@ -211,8 +212,12 @@ public class ModelManager {
         mat.setFloat("Shininess", 0f);
         mat.setColor("Ambient", ColorRGBA.White);
         mat.setBoolean("UseMaterialColors", true);
-        TangentBinormalGenerator.generate(model);
-        mat.setTexture("NormalMap", app.getAssetManager().loadTexture(normalPath));
+        if ("".equals(normalPath)) {
+
+        } else {
+            TangentBinormalGenerator.generate(model);
+            mat.setTexture("NormalMap", app.getAssetManager().loadTexture(normalPath));
+        }
         model.setMaterial(mat);
 
         app.getRootNode().attachChild(model);
