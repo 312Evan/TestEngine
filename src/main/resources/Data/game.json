@@ -7,15 +7,134 @@
             }
         }
     ],
-    "cubes": [],
-    "models": [],
+    "cubes": [
+        {
+            "addcube": {
+                "size": {
+                    "x": 1400,
+                    "y": 10,
+                    "z": 1400
+                },
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "sand",
+                "tileX": 70,
+                "tileY": 70,
+                "mass": 0,
+                "objectId": 1
+            }
+        },
+        {
+            "addcube": {
+                "size": {
+                    "x": 100,
+                    "y": 500,
+                    "z": 100
+                },
+                "position": {
+                    "x": 100,
+                    "y": 0,
+                    "z": 200
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "texturePath": "concrete",
+                "tileX": 70,
+                "tileY": 70,
+                "mass": 0,
+                "objectId": 1
+            }
+        }
+    ],
+    "models": [
+        {
+            "addmodel": {
+                "size": {
+                    "x": 40.0,
+                    "y": 40.0,
+                    "z": 40.0
+                },
+                "position": {
+                    "x": -24,
+                    "y": -5,
+                    "z": 50
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 1.5,
+                    "z": 0.0
+                },
+                "texturePath": "rock",
+                "modelPath": "Models/boulder.obj",
+                "mass": 0,
+                "objectId": 1
+            }
+        },
+        {
+            "addmodel": {
+                "size": {
+                    "x": 40,
+                    "y": 40,
+                    "z": 40
+                },
+                "position": {
+                    "x": 0,
+                    "y": -3,
+                    "z": 0
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "texturePath": "rock",
+                "modelPath": "Models/stone.obj",
+                "mass": 0,
+                "objectId": 1
+            }
+        },
+        {
+            "addmodel": {
+                "size": {
+                    "x": 40,
+                    "y": 40,
+                    "z": 40
+                },
+                "position": {
+                    "x": 24,
+                    "y": -3,
+                    "z": 100
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "texturePath": "rock",
+                "modelPath": "Models/stone.obj",
+                "mass": 0,
+                "objectId": 1
+            }
+        }
+    ],
     "custommodels": [
         {
             "addmodelwithcustomtexture": {
                 "size": {
-                    "x": 300,
-                    "y": 300,
-                    "z": 300
+                    "x": 30,
+                    "y": 30,
+                    "z": 30
                 },
                 "position": {
                     "x": -12,
@@ -27,51 +146,56 @@
                     "y": 0.0,
                     "z": 0.0
                 },
-                "texturePath": "Textures/ModelTextures/newyork.jpg",
-                "normalPath": "",
-                "modelPath": "Models/newyork.obj",
+                "texturePath": "Textures/ModelTextures/tree.jpg",
+                "normalPath": "Textures/ModelTextures/treeNormal.jpg",
+                "modelPath": "Models/tree.obj",
                 "mass": 0,
                 "objectId": 1
+            }
+        },
+        {
+            "addmodelwithcustomtexture": {
+                "size": {
+                    "x": 30,
+                    "y": 30,
+                    "z": 30
+                },
+                "position": {
+                    "x": -30,
+                    "y": 55,
+                    "z": 60
+                },
+                "rotation": {
+                    "x": 0.1,
+                    "y": 0.0,
+                    "z": 0.1
+                },
+                "texturePath": "Textures/ModelTextures/tree.jpg",
+                "normalPath": "Textures/ModelTextures/treeNormal.jpg",
+                "modelPath": "Models/tree.obj",
+                "mass": 0,
+                "objectId": 2
             }
         }
     ],
     "pyramids": [],
     "spheres": [],
     "cones": [],
-    "water": [
-        {
-            "addocean": {
-                "foam": true,
-                "waterHeight": -300,
-                "waterTransparency": 0.1,
-                "waterColor": {
-                    "r": 56,
-                    "g": 107,
-                    "b": 79,
-                    "a": 1
-                },
-                "deepWaterColor": {
-                    "r": 56,
-                    "g": 107,
-                    "b": 79,
-                    "a": 1
-                }
-            }
-        }],
+    "water": [],
     "lighting": [
         {
             "addlight": {
                 "sunDirection": {
-                    "x": -0.9,
+                    "x": -10,
                     "y": -50,
-                    "z": -0.5
+                    "z": 30
                 },
                 "hdrSkybox": true,
-                "skyboxPath": "Textures/Skyboxes/clearsky.hdr",
+                "skyboxPath": "Textures/Skyboxes/sunset.hdr",
                 "enableBloom": true,
-                "enableSunrays": true,
+                "enableSunrays": false,
                 "bloomIntensity": 0.1,
-                "shadowDistance": 3000
+                "shadowDistance": 600
             }
         }
     ],

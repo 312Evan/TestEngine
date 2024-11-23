@@ -43,7 +43,7 @@ public class LightingManager {
         dlsr.setLight(sun);
         dlsr.setLambda(0.1f);
         dlsr.setShadowIntensity(0.7f);
-        dlsr.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
+        dlsr.setEdgeFilteringMode(EdgeFilteringMode.Bilinear);
         dlsr.setEnabledStabilization(true);
         dlsr.setShadowZExtend(shadowDistance);
         app.getViewPort().addProcessor(dlsr);
@@ -53,7 +53,7 @@ public class LightingManager {
         dlsf.setLambda(0.55f);
         dlsf.setEdgesThickness(1);
         dlsf.setShadowIntensity(0.7f);
-        dlsf.setEdgeFilteringMode(EdgeFilteringMode.PCF8);
+        dlsf.setEdgeFilteringMode(EdgeFilteringMode.Bilinear);
         dlsf.setEnabled(true);
 
         FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());

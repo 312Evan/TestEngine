@@ -1,0 +1,79 @@
+{
+    "gamedata": [
+        {
+            "gameinfo": {
+                "title": "Engine Demo",
+                "creator": "Evan"
+            }
+        }
+    ],
+    "cubes": [],
+    "models": [],
+    "custommodels": [
+        {
+            "addmodelwithcustomtexture": {
+                "size": {
+                    "x": 300,
+                    "y": 300,
+                    "z": 300
+                },
+                "position": {
+                    "x": -12,
+                    "y": 59,
+                    "z": 30
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "texturePath": "Textures/ModelTextures/newyork.jpg",
+                "normalPath": "",
+                "modelPath": "Models/newyork.obj",
+                "mass": 0,
+                "objectId": 1
+            }
+        }
+    ],
+    "pyramids": [],
+    "spheres": [],
+    "cones": [],
+    "water": [
+        {
+            "addocean": {
+                "foam": true,
+                "waterHeight": -300,
+                "waterTransparency": 0.1,
+                "waterColor": {
+                    "r": 56,
+                    "g": 107,
+                    "b": 79,
+                    "a": 1
+                },
+                "deepWaterColor": {
+                    "r": 56,
+                    "g": 107,
+                    "b": 79,
+                    "a": 1
+                }
+            }
+        }],
+    "lighting": [
+        {
+            "addlight": {
+                "sunDirection": {
+                    "x": -0.9,
+                    "y": -50,
+                    "z": -0.5
+                },
+                "hdrSkybox": true,
+                "skyboxPath": "Textures/Skyboxes/clearsky.hdr",
+                "enableBloom": true,
+                "enableSunrays": true,
+                "bloomIntensity": 0.1,
+                "shadowDistance": 3000
+            }
+        }
+    ],
+    "text": []
+}
